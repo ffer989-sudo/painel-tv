@@ -9,6 +9,7 @@
 :root {
     --azul-escuro: #0a192f;
     --azul-card: #112240;
+    --azul-hover: #1d3557;
     --azul-destaque: #0077b6;
     --cyan: #00f5d4;
     --verde: #2ec4b6;
@@ -16,11 +17,6 @@
     --amarelo: #ffb703;
     --cinza-texto: #8892b0;
     --branco: #f8f9fa;
-
-    /* TEMA ANIVERSARIANTES */
-    --bg-aniv: #801313;
-    --amarelo-aniv: #ffc82c;
-    --laranja-aniv: #ff5722;
 }
 
 * { box-sizing: border-box; }
@@ -28,20 +24,22 @@
 html, body {
     margin: 0;
     padding: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: var(--azul-escuro);
     color: var(--branco);
     overflow: hidden;
 }
 
-/* ROTAÇÃO E TRANSIÇÃO DE TELAS */
+/* ==========================================
+   ROTAÇÃO E TRANSIÇÃO DE TELAS
+   ========================================== */
 .tela {
     display: none;
     opacity: 0;
     transition: opacity 0.8s ease-in-out;
-    padding: 20px;
+    padding: 30px;
     width: 100vw;
     height: 100vh;
 }
@@ -60,11 +58,11 @@ html, body {
     display: flex;
     gap: 10px;
     z-index: 9999;
-    background: rgba(0,0,0,0.4);
+    background: rgba(255,255,255,0.08);
     backdrop-filter: blur(8px);
     padding: 8px 16px;
     border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .ponto {
@@ -76,12 +74,18 @@ html, body {
 }
 
 .ponto.ativo {
-    background: var(--amarelo-aniv);
-    box-shadow: 0 0 10px var(--amarelo-aniv);
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
 }
 
-/* ESTILOS TELA 1 (DASHBOARD) */
-.header-tv { text-align: center; margin-bottom: 25px; }
+/* ==========================================
+   ESTILOS - TELA 1 (DASHBOARD REDESENHADO)
+   ========================================== */
+.header-tv {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
 .header-tv h1 {
     font-size: clamp(28px, 2.5vw, 44px);
     margin: 0;
@@ -91,6 +95,7 @@ html, body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 .header-tv .sub {
     font-size: clamp(14px, 1.2vw, 22px);
     color: var(--cinza-texto);
@@ -99,7 +104,11 @@ html, body {
     justify-content: center;
     gap: 30px;
 }
-.header-tv .sub span { color: var(--amarelo); font-weight: bold; }
+
+.header-tv .sub span {
+    color: var(--amarelo);
+    font-weight: bold;
+}
 
 .dashboard-grid {
     display: grid;
@@ -126,180 +135,351 @@ html, body {
 .card-faixa::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 6px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
     background: linear-gradient(90deg, var(--azul-destaque), var(--cyan));
 }
 
 .card-header {
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px; margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 12px;
+    margin-bottom: 15px;
 }
-.card-header .titulo { font-size: clamp(22px, 1.8vw, 30px); font-weight: 800; color: var(--branco); }
-.card-header .meta-badge { background: rgba(255,255,255,0.06); padding: 6px 14px; border-radius: 12px; font-size: clamp(12px, 1vw, 16px); color: var(--cinza-texto); }
-.card-header .meta-badge strong { color: var(--branco); }
 
-.metricas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-.metrica-box { background: rgba(0,0,0,0.25); padding: 15px; border-radius: 14px; text-align: center; }
-.metrica-box .rotulo { font-size: clamp(11px, 0.85vw, 14px); color: var(--cinza-texto); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
-.metrica-box .valor { font-size: clamp(22px, 2vw, 34px); font-weight: 800; }
-.metrica-box .pct { font-size: clamp(12px, 0.9vw, 16px); font-weight: bold; margin-top: 4px; }
+.card-header .titulo {
+    font-size: clamp(22px, 1.8vw, 30px);
+    font-weight: 800;
+    color: var(--branco);
+}
 
+.card-header .meta-badge {
+    background: rgba(255,255,255,0.06);
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: clamp(12px, 1vw, 16px);
+    color: var(--cinza-texto);
+}
+
+.card-header .meta-badge strong {
+    color: var(--branco);
+}
+
+/* BLANCOS DE RESULTADOS PRINCIPAIS */
+.metricas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.metrica-box {
+    background: rgba(0,0,0,0.25);
+    padding: 15px;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.metrica-box .rotulo {
+    font-size: clamp(11px, 0.85vw, 14px);
+    color: var(--cinza-texto);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.metrica-box .valor {
+    font-size: clamp(22px, 2vw, 34px);
+    font-weight: 800;
+}
+
+.metrica-box .pct {
+    font-size: clamp(12px, 0.9vw, 16px);
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+/* CORES DINÂMICAS DE STATUS */
 .status-negativo { color: var(--vermelho); }
 .status-positivo { color: var(--verde); }
 
-.progresso-container { margin-bottom: 15px; }
-.progresso-rotulo { display: flex; justify-content: space-between; font-size: clamp(11px, 0.85vw, 14px); color: var(--cinza-texto); margin-bottom: 6px; }
-.barra-bg { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-.barra-fill { height: 100%; border-radius: 10px; transition: width 1s ease-in-out; }
-.barra-fill.realizado { background: linear-gradient(90deg, #3a86ff, #00f5d4); }
-.barra-fill.projecao { background: linear-gradient(90deg, #ffb703, #fb8500); }
-
-.card-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 12px; font-size: clamp(11px, 0.85vw, 14px); }
-.card-footer div { display: flex; flex-direction: column; }
-.card-footer span:first-child { color: var(--cinza-texto); }
-.card-footer span:last-child { font-weight: bold; font-size: 1.1em; margin-top: 2px; }
-
-.rodape-tv { text-align: center; color: var(--cinza-texto); font-size: 12px; margin-top: 20px; }
-
-/* ESTILOS TELA DE ANIVERSARIANTES */
-.tela-aniversario {
-    background-color: var(--bg-aniv);
-    background-image: 
-        radial-gradient(circle at 10% 20%, #ff5722 4px, transparent 5px),
-        radial-gradient(circle at 90% 15%, #ffc82c 6px, transparent 7px),
-        radial-gradient(circle at 85% 80%, #ffffff 5px, transparent 6px),
-        radial-gradient(circle at 15% 85%, #ffc82c 5px, transparent 6px);
-    background-size: 180px 180px, 220px 220px, 150px 150px, 200px 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 25px 30px;
-    height: 100vh;
-}
-
-.intro-cartaz { justify-content: center; text-align: center; }
-.intro-cartaz h2 {
-    font-size: clamp(40px, 5vw, 75px);
-    color: var(--amarelo-aniv);
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin: 0;
-    text-shadow: 3px 3px 0px #000;
-}
-.intro-cartaz p {
-    font-size: clamp(22px, 2.5vw, 40px);
-    color: #fff;
-    font-weight: 700;
-    margin-top: 15px;
-}
-
-.aniv-banner-header { text-align: center; margin-bottom: 5px; }
-.aniv-titulo-principal {
-    font-size: clamp(32px, 3.8vw, 52px);
-    font-weight: 900;
-    color: var(--amarelo-aniv);
-    text-transform: uppercase;
-    line-height: 1;
-    text-shadow: 2px 2px 0px #000;
-    letter-spacing: 1px;
-    margin: 0;
-}
-.aniv-sub-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 8px; }
-.aniv-titulo-mes { font-size: clamp(26px, 3vw, 42px); font-weight: 900; color: var(--amarelo-aniv); text-transform: uppercase; text-shadow: 2px 2px 0px #000; }
-
-.aniv-grid-cards {
-    display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-    gap: 20px 30px; max-width: 1400px; width: 100%; margin: auto 0;
-}
-
-.aniv-card { display: flex; flex-direction: column; align-items: center; width: clamp(160px, 14vw, 210px); }
-.aniv-foto-frame { width: 100%; height: clamp(160px, 14vw, 210px); border-radius: 18px; overflow: hidden; background: #111; box-shadow: 0 8px 20px rgba(0,0,0,0.5); border: 3px solid #fff; }
-.aniv-foto-frame img { width: 100%; height: 100%; object-fit: cover; }
-.aniv-tag-nome { background: var(--amarelo-aniv); color: #111; font-weight: 800; font-size: clamp(12px, 1vw, 15px); padding: 6px 10px; border-radius: 20px; text-align: center; margin-top: -14px; z-index: 2; width: 95%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
-.aniv-tag-dia { background: var(--laranja-aniv); color: #fff; font-weight: 900; font-size: clamp(12px, 1vw, 15px); padding: 4px 16px; border-radius: 12px; margin-top: -8px; z-index: 3; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
-
-.aniv-rodape-mensagem { text-align: center; color: #ffffff; margin-top: 5px; }
-.aniv-rodape-mensagem .p1 { font-size: clamp(16px, 1.3vw, 22px); font-weight: 700; margin: 0; }
-.aniv-rodape-mensagem .p2 { font-size: clamp(18px, 1.5vw, 26px); font-weight: 900; margin: 4px 0 0; display: flex; align-items: center; justify-content: center; gap: 15px; color: var(--amarelo-aniv); }
-
-/* ESTILOS TELAS DINÂMICAS DE IMAGENS */
-.brinde-header-titulo {
-    text-align: center;
-    font-size: clamp(28px, 3.2vw, 48px);
-    font-weight: 900;
-    color: var(--cyan);
-    text-transform: uppercase;
+/* BARRAS DE PROGRESSO */
+.progresso-container {
     margin-bottom: 15px;
-    letter-spacing: 1.5px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
-.brinde-container-img {
-    flex: 1;
+.progresso-rotulo {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    font-size: clamp(11px, 0.85vw, 14px);
+    color: var(--cinza-texto);
+    margin-bottom: 6px;
+}
+
+.barra-bg {
+    width: 100%;
+    height: 12px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
     overflow: hidden;
 }
 
-.brinde-container-img img {
-    max-width: 95%;
-    max-height: 80vh;
-    object-fit: contain;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+.barra-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
 }
 
-.fullscreen-button {
-    position: fixed; right: 20px; bottom: 20px; background: rgba(0,0,0,0.5);
-    color: white; border: 1px solid rgba(255,255,255,0.3); padding: 10px 18px;
-    border-radius: 10px; cursor: pointer; backdrop-filter: blur(5px); z-index: 9999;
+.barra-fill.realizado { background: linear-gradient(90deg, #3a86ff, #00f5d4); }
+.barra-fill.projecao { background: linear-gradient(90deg, #ffb703, #fb8500); }
+
+/* FOOTER DO CARD (SALDOS) */
+.card-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: rgba(255,255,255,0.03);
+    padding: 12px;
+    border-radius: 12px;
+    font-size: clamp(11px, 0.85vw, 14px);
 }
+
+.card-footer div {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-footer span:first-child {
+    color: var(--cinza-texto);
+}
+
+.card-footer span:last-child {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 2px;
+}
+
+.rodape-tv {
+    text-align: center;
+    color: var(--cinza-texto);
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+/* ==========================================
+   ESTILOS - TELAS DE ANIVERSARIANTES
+   ========================================== */
+.intro-aniversarios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+    border-radius: 24px;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.intro-aniversarios h2 {
+    font-size: clamp(36px, 5vw, 70px);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    animation: pulse 2s infinite alternate;
+}
+
+.intro-aniversarios p {
+    font-size: clamp(20px, 2.5vw, 36px);
+    margin-top: 20px;
+    color: var(--amarelo);
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.98); }
+    100% { transform: scale(1.03); }
+}
+
+.balao {
+    position: absolute;
+    bottom: -100px;
+    width: 50px;
+    height: 70px;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    animation: subir 6s infinite linear;
+    opacity: 0.6;
+}
+
+@keyframes subir {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+    100% { transform: translateY(-1000px) rotate(20deg); opacity: 0; }
+}
+
+.aniversariantes-container {
+    max-width: 1400px;
+    margin: auto;
+    width: 100%;
+    background: var(--azul-card);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.aniversariantes-header {
+    text-align: center;
+    background: linear-gradient(90deg, #e63946, #d62828);
+    color: white;
+    padding: 18px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 0 4px 20px rgba(230,57,70,0.4);
+}
+
+.grid-meses {
+    display: flex;
+    justify-content: center;
+}
+
+.card-mes {
+    background: rgba(0,0,0,0.2);
+    border-radius: 16px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.card-mes-topo {
+    padding: 16px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.05);
+    letter-spacing: 1px;
+}
+
+.card-mes-corpo {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.aniversariante-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    font-size: clamp(16px, 1.2vw, 22px);
+}
+
+.aniversariante-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.aniversariante-foto {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--cyan);
+    background-color: #222;
+    flex-shrink: 0;
+}
+
+.aniversariante-item .nome { font-weight: 600; color: var(--branco); }
+.aniversariante-item .dia { color: var(--cyan); font-weight: bold; white-space: nowrap; }
+
+.fullscreen-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+}
+.fullscreen-button:hover { background: rgba(255,255,255,0.2); }
 </style>
 </head>
 
 <body>
 
-<div class="indicador-telas" id="indicadorTelas"></div>
+<div class="indicador-telas">
+    <div class="ponto ativo"></div>
+    <div class="ponto"></div>
+    <div class="ponto"></div>
+</div>
 
-<div id="wrapperTelas">
-    <!-- TELA 1: DASHBOARD -->
-    <div class="tela ativa" id="tela1">
-        <div class="header-tv">
-            <h1>Acompanhamento de Recuperação</h1>
-            <div class="sub">
-                <div>Data: <span id="dataAtual">--/--/----</span></div>
-                <div>Faltam <span id="diasRestantes">--</span> dias úteis</div>
-            </div>
-        </div>
-        <div class="dashboard-grid" id="cardsContainer"></div>
-        <div class="rodape-tv">
-            Atualizado automaticamente • <span id="ultimaAtualizacao"></span>
+<!-- TELA 1: RECUPERAÇÃO (LAYOUT SIMPLIFICADO & DINÂMICO PARA TV) -->
+<div class="tela ativa" id="tela1">
+    <div class="header-tv">
+        <h1>Acompanhamento de Recuperação</h1>
+        <div class="sub">
+            <div>Data: <span id="dataAtual">--/--/----</span></div>
+            <div>Faltam <span id="diasRestantes">--</span> dias úteis</div>
         </div>
     </div>
 
-    <!-- TELA 2: INTRO ANIVERSARIANTES -->
-    <div class="tela tela-aniversario" id="tela2">
-        <div class="intro-cartaz">
-            <h2>🎈 ANIVERSARIANTES 🎈</h2>
-            <p id="textoMesAniversario">CONFIRA OS ANIVERSARIANTES DO MÊS!</p>
-        </div>
+    <div class="dashboard-grid" id="cardsContainer">
+        <!-- Cards gerados via JS dinamicamente -->
     </div>
 
-    <!-- TELA 3: PAINEL ANIVERSARIANTES -->
-    <div class="tela tela-aniversario" id="tela3">
-        <div class="aniv-banner-header">
-            <h1 class="aniv-titulo-principal">ANIVERSARIANTES</h1>
-            <div class="aniv-sub-header">
-                <span class="aniv-titulo-mes" id="tituloMesPainel">DO MÊS</span>
-            </div>
+    <div class="rodape-tv">
+        Atualizado automaticamente • <span id="ultimaAtualizacao"></span>
+    </div>
+</div>
+
+<!-- TELA 2: INTRO ANIVERSARIANTES -->
+<div class="tela" id="tela2">
+    <div class="intro-aniversarios">
+        <div class="balao" style="left: 10%; background: #e63946; animation-delay: 0s;"></div>
+        <div class="balao" style="left: 25%; background: #ffb703; animation-delay: 1.5s;"></div>
+        <div class="balao" style="left: 40%; background: #00f5d4; animation-delay: 0.5s;"></div>
+        <div class="balao" style="left: 60%; background: #2ec4b6; animation-delay: 2s;"></div>
+        <div class="balao" style="left: 75%; background: #e0aaff; animation-delay: 1s;"></div>
+        <div class="balao" style="left: 90%; background: #3a86ff; animation-delay: 2.5s;"></div>
+
+        <h2>🎈 Aniversariantes 🎈</h2>
+        <p id="textoMesAniversario">Confira quem celebra este mês!</p>
+    </div>
+</div>
+
+<!-- TELA 3: LISTA ANIVERSARIANTES -->
+<div class="tela" id="tela3">
+    <div class="aniversariantes-container">
+        <div class="aniversariantes-header">
+            🎂 Aniversariantes do Mês
         </div>
-        <div class="aniv-grid-cards" id="gridAniversariantes"></div>
-        <div class="aniv-rodape-mensagem">
-            <p class="p1">Que este novo ciclo seja repleto de realizações.</p>
-            <p class="p2">Feliz Aniversário! 🎉</p>
+        <div class="grid-meses" id="gridAniversariantes"></div>
+  
+    <div class="aniversariantes-mensagem">
+            <p>Que este novo ciclo seja repleto de realizações.</p>
+            <p class="destaque">Feliz Aniversário! 🎉</p>
         </div>
     </div>
 </div>
@@ -307,6 +487,10 @@ html, body {
 <button class="fullscreen-button" onclick="telaCheia()">⛶ Tela cheia</button>
 
 <script>
+
+/* =========================================================================
+   1. APENAS ATUALIZE ESTE BLOCO DE DADOS (DADOS DE ENTRADA)
+   ========================================================================= */
 const dadosEntrada = [
     {
         "faixa": "60 dias",
@@ -328,69 +512,64 @@ const dadosEntrada = [
     }
 ];
 
-const imagensBrindes = [
-    {
-        "titulo": "ANIVERSARIANTES DO MÊS",
-        "src": "./aniversariantes_do_mes.png"
-    },
-    {
-        "titulo": "FECHAMENTO DE OURO",
-        "src": "./fechamento_de_ouro.png"
-    },
-    {
-        "titulo": "O GRADE PÓDIO",
-        "src": "./o_grade_podio.png"
-    },
-    {
-        "titulo": "PREMIAÇÃO MENSAL 100%",
-        "src": "./premiacao_mensal_100_.png"
-    },
-    {
-        "titulo": "PREMIAÇÃO MENSAL 90% A 99%",
-        "src": "./premiacao_mensal_90__a_99_.png"
-    }
-];
+const imagensBrindes = [];
 
-const FOTO_PADRAO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ffffff'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
+/* =========================================================================
+   2. LISTA DE ANIVERSARIANTES
+   ========================================================================= */
+const FOTO_PADRAO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%238892b0'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
 
 const listaAniversariantes = [
-    { nome: "Leyson Renan", dia: "25/01", foto: "" },
-    { nome: "Sara Barbosa", dia: "27/01", foto: "" },
-    { nome: "Arlinda Maria", dia: "26/02", foto: "" },
-    { nome: "Alice Mariano", dia: "23/03", foto: "" },
-    { nome: "Luciana Fernandes", dia: "10/04", foto: "" },
-    { nome: "Fernando Santos", dia: "18/05", foto: "https://media.licdn.com/dms/image/v2/D4D03AQFR92WyH72eQw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732812678925?e=1790812800&v=beta&t=PdNNXjNSD-KpI4vB1npypp0zStisqRSxeOnzOjbcXEc" },
-    { nome: "Daniela Bianchi", dia: "22/05", foto: "" },
+    { nome: "Leyson Renan Batista de Oliveira", dia: "25/01", foto: "" },
+    { nome: "Sara Barbosa Vilar", dia: "27/01", foto: "" },
+    { nome: "Arlinda Maria Batista Neta Reis", dia: "26/02", foto: "" },
+    { nome: "Alice Mariano Ramos", dia: "23/03", foto: "" },
+    { nome: "Luciana Fernandes Lacerda", dia: "10/04", foto: "" },
+    { 
+        nome: "Fernando Paulo dos Santos Pereira", 
+        dia: "18/05", 
+        foto: "https://media.licdn.com/dms/image/v2/D4D03AQFR92WyH72eQw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732812678925?e=1790812800&v=beta&t=PdNNXjNSD-KpI4vB1npypp0zStisqRSxeOnzOjbcXEc" 
+    },
+    { nome: "Daniela Vanessa Bianchi", dia: "22/05", foto: "" },
     { nome: "Ana Julia Camargo", dia: "04/06", foto: "" },
-    { nome: "Tainara Livia", dia: "20/06", foto: "" },
-    { nome: "Mariana Nunes", dia: "12/07", foto: "" },
-    { nome: "Bianca Vulcani", dia: "03/08", foto: "" },
-    { nome: "Diego Correa", dia: "17/08", foto: "" },
-    { nome: "Sabatha Santana", dia: "21/08", foto: "" },
-    { nome: "Gabrielly Santos", dia: "25/08", foto: "" },
-    { nome: "Geovana Santos", dia: "01/09", foto: "https://i.postimg.cc/fR7Pw5jF/GEOvana.jpg" },
-    { nome: "João Victor", dia: "04/09", foto: "https://i.postimg.cc/kXbZH7V5/JOAO.jpg" },
-    { nome: "Rafael Angelotti", dia: "16/09", foto: "https://i.postimg.cc/vTqQSbDt/angelotti.jpg" },
-    { nome: "Jade Franco", dia: "19/09", foto: "https://i.postimg.cc/4x5T8XMX/JADE.jpg" },
-    { nome: "Karyna Meira", dia: "24/09", foto: "https://i.postimg.cc/V63ySvSW/KARYNA-DESKTOP.jpg" },
-    { nome: "Luiz Gustavo", dia: "10/10", foto: "" },
-    { nome: "Claudia Mattos", dia: "16/10", foto: "" },
-    { nome: "Rafael Tolli", dia: "16/10", foto: "" },
-    { nome: "Clara Marcelino", dia: "02/12", foto: "" },
-    { nome: "Thierry Rodrigues", dia: "19/12", foto: "" },
-    { nome: "Amanda Silva", dia: "21/12", foto: "" },
-    { nome: "Maria Clara", dia: "26/12", foto: "" }
+    { nome: "Tainara Livia Rocha", dia: "20/06", foto: "" },
+    { nome: "Mariana Nunes Silva", dia: "12/07", foto: "" },
+    { nome: "Bianca Vieira Vulcani", dia: "03/08", foto: "" },
+    { nome: "Diego Correa dos Santos", dia: "17/08", foto: "" },
+    { nome: "Sabatha Melissa Santana Novais", dia: "21/08", foto: "" },
+    { nome: "Gabrielly dos Santos", dia: "25/08", foto: "" },
+    { nome: "Geovana Pereira dos Santos", dia: "01/09", foto: "https://i.postimg.cc/fR7Pw5jF/GEOvana.jpg" },
+    { nome: "João Victor Vitoriano da Silva", dia: "04/09", foto: "https://i.postimg.cc/kXbZH7V5/JOAO.jpg" },
+    { nome: "Rafael Gustavo Angelotti Silva", dia: "16/09", foto: "https://i.postimg.cc/vTqQSbDt/angelotti.jpg" },
+    { nome: "Jade Oliveira Franco da Silva", dia: "19/09", foto: "https://i.postimg.cc/4x5T8XMX/JADE.jpg" },
+    { nome: "Karyna Cristina Meira Bento", dia: "24/09", foto: "https://i.postimg.cc/V63ySvSW/KARYNA-DESKTOP.jpg" },
+    { nome: "Luiz Gustavo Damas da Silva", dia: "10/10", foto: "" },
+    { nome: "Claudia Fernanda Pin de Mattos", dia: "16/10", foto: "" },
+    { nome: "Rafael da Silva Batista Tolli", dia: "16/10", foto: "" },
+    { nome: "Clara Marcelino da Silva", dia: "02/12", foto: "" },
+    { nome: "Thierry Rodrigues Dias", dia: "19/12", foto: "" },
+    { nome: "Amanda Cristina Aparecida Silva", dia: "21/12", foto: "" },
+    { nome: "Maria Clara Vieira Caires", dia: "26/12", foto: "" }
 ];
 
-function fmt(num) { return Number(num).toLocaleString('pt-BR'); }
-function fmtPct(num) { const p = (num * 100).toFixed(0); return (p > 0 ? "+" : "") + p + "%"; }
+/* =========================================================================
+   3. LÓGICA DE CÁLCULO E RENDERIZAÇÃO DA TELA 1 (TV CARD LAYOUT)
+   ========================================================================= */
+function fmt(num) {
+    return Number(num).toLocaleString('pt-BR');
+}
+
+function fmtPct(num) {
+    const p = (num * 100).toFixed(0);
+    return (p > 0 ? "+" : "") + p + "%";
+}
 
 function renderizarTela1() {
     const container = document.getElementById("cardsContainer");
-    if (!container) return;
     container.innerHTML = "";
 
     dadosEntrada.forEach(item => {
+        // Cálculos Automáticos idênticos à planilha fornecida
         const realizadoPct = item.realizado / item.meta;
         const projecaoPct = item.projecao / item.meta;
         const saldoProj = item.projecao - item.meta;
@@ -399,143 +578,90 @@ function renderizarTela1() {
 
         const card = document.createElement("div");
         card.className = "card-faixa";
+
         card.innerHTML = `
             <div class="card-header">
                 <span class="titulo">${item.faixa}</span>
                 <span class="meta-badge">Meta: <strong>${fmt(item.meta)}</strong></span>
             </div>
+
             <div class="metricas-grid">
                 <div class="metrica-box">
                     <div class="rotulo">Realizado</div>
                     <div class="valor" style="color: var(--cyan);">${fmt(item.realizado)}</div>
                     <div class="pct status-negativo">${(realizadoPct * 100).toFixed(0)}%</div>
                 </div>
+
                 <div class="metrica-box">
                     <div class="rotulo">Projeção</div>
                     <div class="valor" style="color: var(--amarelo);">${fmt(item.projecao)}</div>
                     <div class="pct status-negativo">${(projecaoPct * 100).toFixed(0)}%</div>
                 </div>
             </div>
+
             <div class="progresso-container">
                 <div class="progresso-rotulo">
                     <span>Progresso Realizado</span>
                     <span>${(realizadoPct * 100).toFixed(0)}%</span>
                 </div>
-                <div class="barra-bg"><div class="barra-fill realizado" style="width: ${Math.min(realizadoPct * 100, 100)}%;"></div></div>
+                <div class="barra-bg">
+                    <div class="barra-fill realizado" style="width: ${Math.min(realizadoPct * 100, 100)}%;"></div>
+                </div>
             </div>
+
             <div class="progresso-container">
                 <div class="progresso-rotulo">
                     <span>Progresso Projeção</span>
                     <span>${(projecaoPct * 100).toFixed(0)}%</span>
                 </div>
-                <div class="barra-bg"><div class="barra-fill projecao" style="width: ${Math.min(projecaoPct * 100, 100)}%;"></div></div>
+                <div class="barra-bg">
+                    <div class="barra-fill projecao" style="width: ${Math.min(projecaoPct * 100, 100)}%;"></div>
+                </div>
             </div>
+
             <div class="card-footer">
                 <div>
                     <span>Saldo Proj.</span>
-                    <span class="${saldoProj >= 0 ? 'status-positivo' : 'status-negativo'}">${fmt(saldoProj)} (${fmtPct(saldoProjPct)})</span>
+                    <span class="${saldoProj >= 0 ? 'status-positivo' : 'status-negativo'}">
+                        ${fmt(saldoProj)} (${fmtPct(saldoProjPct)})
+                    </span>
                 </div>
                 <div>
                     <span>Saldo Atual</span>
-                    <span class="${saldo >= 0 ? 'status-positivo' : 'status-negativo'}">${fmt(saldo)}</span>
+                    <span class="${saldo >= 0 ? 'status-positivo' : 'status-negativo'}">
+                        ${fmt(saldo)}
+                    </span>
                 </div>
             </div>
         `;
+
         container.appendChild(card);
     });
 }
 
-function montarAniversariantes() {
-    const grid = document.getElementById("gridAniversariantes");
-    if (!grid) return;
-    grid.innerHTML = "";
-
-    const hoje = new Date();
-    const mesAtualNum = hoje.getMonth() + 1;
-    let mesNome = hoje.toLocaleString("pt-BR", { month: "long" }).toUpperCase();
-
-    let doMes = listaAniversariantes.filter(p => {
-        if (!p || !p.dia || typeof p.dia !== 'string' || !p.dia.includes("/")) return false;
-        const partes = p.dia.split("/");
-        return parseInt(partes[1], 10) === mesAtualNum;
-    });
-
-    document.getElementById("tituloMesPainel").innerText = `DE ${mesNome}`;
-    document.getElementById("textoMesAniversario").innerText = `ANIVERSARIANTES DE ${mesNome}!`;
-
-    if (doMes.length === 0) {
-        grid.innerHTML = `<div class="aniv-sem-dados">Nenhum aniversariante cadastrado em ${mesNome}.</div>`;
-        return;
-    }
-
-    doMes.sort((a, b) => parseInt(a.dia.split("/")[0], 10) - parseInt(b.dia.split("/")[0], 10));
-
-    doMes.forEach(p => {
-        const urlFoto = (p.foto && typeof p.foto === 'string' && p.foto.trim() !== "") ? p.foto : FOTO_PADRAO;
-        const card = document.createElement("div");
-        card.className = "aniv-card";
-        card.innerHTML = `
-            <div class="aniv-foto-frame">
-                <img src="${urlFoto}" alt="${p.nome}" onerror="this.src='${FOTO_PADRAO}'">
-            </div>
-            <div class="aniv-tag-nome">${p.nome}</div>
-            <div class="aniv-tag-dia">${p.dia}</div>
-        `;
-        grid.appendChild(card);
-    });
-}
-
-function construirTelasDeImagens() {
-    const wrapper = document.getElementById("wrapperTelas");
-    
-    imagensBrindes.forEach((imgObj, idx) => {
-        const divTela = document.createElement("div");
-        divTela.className = "tela";
-        divTela.id = `telaDinamica_${idx}`;
-        divTela.innerHTML = `
-            <div class="brinde-header-titulo">${imgObj.titulo}</div>
-            <div class="brinde-container-img">
-                <img src="${imgObj.src}" alt="${imgObj.titulo}">
-            </div>
-        `;
-        wrapper.appendChild(divTela);
-    });
-}
-
-function construirIndicadores() {
-    const containerIndicadores = document.getElementById("indicadorTelas");
-    containerIndicadores.innerHTML = "";
-
-    const totalTelas = document.querySelectorAll(".tela").length;
-    for (let i = 0; i < totalTelas; i++) {
-        const ponto = document.createElement("div");
-        ponto.className = `ponto ${i === 0 ? 'ativo' : ''}`;
-        containerIndicadores.appendChild(ponto);
-    }
-}
-
+/* =========================================================================
+   4. ROTAÇÃO DE TELAS & UTILITÁRIOS
+   ========================================================================= */
 const TEMPO_TROCA_SEGUNDOS = 12;
 let telaAtual = 0;
+const telas = document.querySelectorAll(".tela");
+const pontos = document.querySelectorAll(".ponto");
 
 function alternarTela() {
-    const telas = document.querySelectorAll(".tela");
-    const pontos = document.querySelectorAll(".ponto");
-
-    if (telas.length === 0) return;
-
     telas[telaAtual].classList.remove("ativa");
-    if (pontos[telaAtual]) pontos[telaAtual].classList.remove("ativo");
+    if(pontos[telaAtual]) pontos[telaAtual].classList.remove("ativo");
 
     telaAtual = (telaAtual + 1) % telas.length;
 
     telas[telaAtual].classList.add("ativa");
-    if (pontos[telaAtual]) pontos[telaAtual].classList.add("ativo");
+    if(pontos[telaAtual]) pontos[telaAtual].classList.add("ativo");
 }
+
+setInterval(alternarTela, TEMPO_TROCA_SEGUNDOS * 1000);
 
 function atualizarData() {
     const hoje = new Date();
-    const elData = document.getElementById("dataAtual");
-    if (elData) elData.innerText = hoje.toLocaleDateString("pt-BR");
+    document.getElementById("dataAtual").innerText = hoje.toLocaleDateString("pt-BR");
 
     const ultimoDia = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
     let diasRestantes = 0;
@@ -544,8 +670,53 @@ function atualizarData() {
         const dia = new Date(hoje.getFullYear(), hoje.getMonth(), d);
         if (dia.getDay() !== 0 && dia.getDay() !== 6) diasRestantes++;
     }
-    const elDias = document.getElementById("diasRestantes");
-    if (elDias) elDias.innerText = diasRestantes;
+    document.getElementById("diasRestantes").innerText = diasRestantes;
+
+    const mesNome = hoje.toLocaleString("pt-BR", { month: "long" });
+    document.getElementById("textoMesAniversario").innerText = `Aniversariantes de ${mesNome.toUpperCase()}!`;
+}
+
+function montarAniversariantes() {
+    const grid = document.getElementById("gridAniversariantes");
+    grid.innerHTML = "";
+
+    const hoje = new Date();
+    const mesAtualString = String(hoje.getMonth() + 1).padStart(2, "0");
+    const mesNome = hoje.toLocaleString("pt-BR", { month: "long" }).toUpperCase();
+
+    const doMes = listaAniversariantes.filter(p => {
+        if (!p.dia || !p.dia.includes("/")) return false;
+        const partes = p.dia.split("/");
+        return partes[1].padStart(2, "0") === mesAtualString;
+    });
+
+    doMes.sort((a, b) => parseInt(a.dia.split("/")[0], 10) - parseInt(b.dia.split("/")[0], 10));
+
+    const card = document.createElement("div");
+    card.className = "card-mes";
+
+    let htmlItens = "";
+    doMes.forEach(p => {
+        const urlFoto = (p.foto && p.foto.trim() !== "") ? p.foto : FOTO_PADRAO;
+        htmlItens += `
+            <div class="aniversariante-item">
+                <div class="aniversariante-info">
+                    <img src="${urlFoto}" class="aniversariante-foto" alt="${p.nome}" onerror="this.src='${FOTO_PADRAO}'">
+                    <span class="nome">${p.nome}</span>
+                </div>
+                <span class="dia">${p.dia}</span>
+            </div>
+        `;
+    });
+
+    card.innerHTML = `
+        <div class="card-mes-topo">${mesNome}</div>
+        <div class="card-mes-corpo">
+            ${htmlItens || "<p style='text-align:center;color:var(--cinza-texto);padding:20px;'>Nenhum aniversariante neste mês.</p>"}
+        </div>
+    `;
+
+    grid.appendChild(card);
 }
 
 function telaCheia() {
@@ -560,16 +731,12 @@ function init() {
     atualizarData();
     renderizarTela1();
     montarAniversariantes();
-    construirTelasDeImagens();
-    construirIndicadores();
-
-    const elAtt = document.getElementById("ultimaAtualizacao");
-    if (elAtt) elAtt.innerText = new Date().toLocaleTimeString("pt-BR");
-
-    setInterval(alternarTela, TEMPO_TROCA_SEGUNDOS * 1000);
+    document.getElementById("ultimaAtualizacao").innerText = new Date().toLocaleTimeString("pt-BR");
 }
 
-window.onload = init;
+init();
+
 </script>
+
 </body>
 </html>
