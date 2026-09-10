@@ -169,7 +169,6 @@ html, body {
     color: var(--branco);
 }
 
-/* BLANCOS DE RESULTADOS PRINCIPAIS */
 .metricas-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -203,11 +202,9 @@ html, body {
     margin-top: 4px;
 }
 
-/* CORES DINÂMICAS DE STATUS */
 .status-negativo { color: var(--vermelho); }
 .status-positivo { color: var(--verde); }
 
-/* BARRAS DE PROGRESSO */
 .progresso-container {
     margin-bottom: 15px;
 }
@@ -237,7 +234,6 @@ html, body {
 .barra-fill.realizado { background: linear-gradient(90deg, #3a86ff, #00f5d4); }
 .barra-fill.projecao { background: linear-gradient(90deg, #ffb703, #fb8500); }
 
-/* FOOTER DO CARD (SALDOS) */
 .card-footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -410,6 +406,41 @@ html, body {
 .aniversariante-item .nome { font-weight: 600; color: var(--branco); }
 .aniversariante-item .dia { color: var(--cyan); font-weight: bold; white-space: nowrap; }
 
+/* ==========================================
+   ESTILOS - TELAS DINÂMICAS DE IMAGENS / BRINDES
+   ========================================== */
+.container-imagem-brinde {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
+}
+
+.titulo-imagem-brinde {
+    font-size: clamp(24px, 3vw, 42px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--amarelo);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.img-brinde-midia {
+    max-width: 90vw;
+    max-height: 75vh;
+    border-radius: 18px;
+    object-fit: contain;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
 .fullscreen-button {
     position: fixed;
     right: 20px;
@@ -429,57 +460,48 @@ html, body {
 
 <body>
 
-<div class="indicador-telas">
-    <div class="ponto ativo"></div>
-    <div class="ponto"></div>
-    <div class="ponto"></div>
-</div>
+<div class="indicador-telas" id="indicadorTelas"></div>
 
-<!-- TELA 1: RECUPERAÇÃO (LAYOUT SIMPLIFICADO & DINÂMICO PARA TV) -->
-<div class="tela ativa" id="tela1">
-    <div class="header-tv">
-        <h1>Acompanhamento de Recuperação</h1>
-        <div class="sub">
-            <div>Data: <span id="dataAtual">--/--/----</span></div>
-            <div>Faltam <span id="diasRestantes">--</span> dias úteis</div>
+<div id="containerTelas">
+    <!-- TELA 1: RECUPERAÇÃO -->
+    <div class="tela ativa" id="tela1">
+        <div class="header-tv">
+            <h1>Acompanhamento de Recuperação</h1>
+            <div class="sub">
+                <div>Data: <span id="dataAtual">--/--/----</span></div>
+                <div>Faltam <span id="diasRestantes">--</span> dias úteis</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid" id="cardsContainer"></div>
+
+        <div class="rodape-tv">
+            Atualizado automaticamente • <span id="ultimaAtualizacao"></span>
         </div>
     </div>
 
-    <div class="dashboard-grid" id="cardsContainer">
-        <!-- Cards gerados via JS dinamicamente -->
-    </div>
+    <!-- TELA 2: INTRO ANIVERSARIANTES -->
+    <div class="tela" id="tela2">
+        <div class="intro-aniversarios">
+            <div class="balao" style="left: 10%; background: #e63946; animation-delay: 0s;"></div>
+            <div class="balao" style="left: 25%; background: #ffb703; animation-delay: 1.5s;"></div>
+            <div class="balao" style="left: 40%; background: #00f5d4; animation-delay: 0.5s;"></div>
+            <div class="balao" style="left: 60%; background: #2ec4b6; animation-delay: 2s;"></div>
+            <div class="balao" style="left: 75%; background: #e0aaff; animation-delay: 1s;"></div>
+            <div class="balao" style="left: 90%; background: #3a86ff; animation-delay: 2.5s;"></div>
 
-    <div class="rodape-tv">
-        Atualizado automaticamente • <span id="ultimaAtualizacao"></span>
-    </div>
-</div>
-
-<!-- TELA 2: INTRO ANIVERSARIANTES -->
-<div class="tela" id="tela2">
-    <div class="intro-aniversarios">
-        <div class="balao" style="left: 10%; background: #e63946; animation-delay: 0s;"></div>
-        <div class="balao" style="left: 25%; background: #ffb703; animation-delay: 1.5s;"></div>
-        <div class="balao" style="left: 40%; background: #00f5d4; animation-delay: 0.5s;"></div>
-        <div class="balao" style="left: 60%; background: #2ec4b6; animation-delay: 2s;"></div>
-        <div class="balao" style="left: 75%; background: #e0aaff; animation-delay: 1s;"></div>
-        <div class="balao" style="left: 90%; background: #3a86ff; animation-delay: 2.5s;"></div>
-
-        <h2>🎈 Aniversariantes 🎈</h2>
-        <p id="textoMesAniversario">Confira quem celebra este mês!</p>
-    </div>
-</div>
-
-<!-- TELA 3: LISTA ANIVERSARIANTES -->
-<div class="tela" id="tela3">
-    <div class="aniversariantes-container">
-        <div class="aniversariantes-header">
-            🎂 Aniversariantes do Mês
+            <h2>🎈 Aniversariantes 🎈</h2>
+            <p id="textoMesAniversario">Confira quem celebra este mês!</p>
         </div>
-        <div class="grid-meses" id="gridAniversariantes"></div>
-  
-    <div class="aniversariantes-mensagem">
-            <p>Que este novo ciclo seja repleto de realizações.</p>
-            <p class="destaque">Feliz Aniversário! 🎉</p>
+    </div>
+
+    <!-- TELA 3: LISTA ANIVERSARIANTES -->
+    <div class="tela" id="tela3">
+        <div class="aniversariantes-container">
+            <div class="aniversariantes-header">
+                🎂 Aniversariantes do Mês
+            </div>
+            <div class="grid-meses" id="gridAniversariantes"></div>
         </div>
     </div>
 </div>
@@ -489,7 +511,7 @@ html, body {
 <script>
 
 /* =========================================================================
-   1. APENAS ATUALIZE ESTE BLOCO DE DADOS (DADOS DE ENTRADA)
+   1. DADOS DE ENTRADA (SÃO ATUALIZADOS AUTOMATICAMENTE PELO PYTHON)
    ========================================================================= */
 const dadosEntrada = [
     {
@@ -512,7 +534,24 @@ const dadosEntrada = [
     }
 ];
 
-const imagensBrindes = [];
+const imagensBrindes = [
+    {
+        "titulo": "FECHAMENTO DE OURO",
+        "src": "https://i.postimg.cc/QdyKNf2Z/Fechamento-de-Ouro.png"
+    },
+    {
+        "titulo": "O GRADE PÓDIO",
+        "src": "https://i.postimg.cc/zv8V26gN/O-grade-Podio.png"
+    },
+    {
+        "titulo": "PREMIAÇÃO MENSAL  100%",
+        "src": "https://i.postimg.cc/Xq4p1mCd/Premiacao-Mensal-100.png"
+    },
+    {
+        "titulo": "PREMIAÇÃO MENSAL 90% A 99%",
+        "src": "https://i.postimg.cc/8c4s24RK/Premiacao-Mensal-90-a-99.png"
+    }
+];
 
 /* =========================================================================
    2. LISTA DE ANIVERSARIANTES
@@ -553,7 +592,28 @@ const listaAniversariantes = [
 ];
 
 /* =========================================================================
-   3. LÓGICA DE CÁLCULO E RENDERIZAÇÃO DA TELA 1 (TV CARD LAYOUT)
+   3. GERAÇÃO DINÂMICA DAS TELAS DE BRINDES/IMAGENS DA PLANILHA
+   ========================================================================= */
+function gerarTelasImagens() {
+    const containerTelas = document.getElementById("containerTelas");
+    
+    imagensBrindes.forEach((imgObj, idx) => {
+        const divTela = document.createElement("div");
+        divTela.className = "tela";
+        divTela.id = `telaBrinde_${idx}`;
+
+        divTela.innerHTML = `
+            <div class="container-imagem-brinde">
+                ${imgObj.titulo ? `<div class="titulo-imagem-brinde">${imgObj.titulo}</div>` : ''}
+                <img src="${imgObj.src}" class="img-brinde-midia" alt="${imgObj.titulo || 'Imagem Brinde'}">
+            </div>
+        `;
+        containerTelas.appendChild(divTela);
+    });
+}
+
+/* =========================================================================
+   4. RENDERIZAÇÃO DA TELA 1 (RECUPERAÇÃO)
    ========================================================================= */
 function fmt(num) {
     return Number(num).toLocaleString('pt-BR');
@@ -569,7 +629,6 @@ function renderizarTela1() {
     container.innerHTML = "";
 
     dadosEntrada.forEach(item => {
-        // Cálculos Automáticos idênticos à planilha fornecida
         const realizadoPct = item.realizado / item.meta;
         const projecaoPct = item.projecao / item.meta;
         const saldoProj = item.projecao - item.meta;
@@ -640,21 +699,37 @@ function renderizarTela1() {
 }
 
 /* =========================================================================
-   4. ROTAÇÃO DE TELAS & UTILITÁRIOS
+   5. ROTAÇÃO DE TELAS & UTILITÁRIOS
    ========================================================================= */
 const TEMPO_TROCA_SEGUNDOS = 12;
 let telaAtual = 0;
-const telas = document.querySelectorAll(".tela");
-const pontos = document.querySelectorAll(".ponto");
+let telas = [];
+let pontos = [];
+
+function criarIndicadores() {
+    telas = document.querySelectorAll(".tela");
+    const containerIndicadores = document.getElementById("indicadorTelas");
+    containerIndicadores.innerHTML = "";
+
+    telas.forEach((_, i) => {
+        const ponto = document.createElement("div");
+        ponto.className = `ponto ${i === 0 ? 'ativo' : ''}`;
+        containerIndicadores.appendChild(ponto);
+    });
+
+    pontos = document.querySelectorAll(".ponto");
+}
 
 function alternarTela() {
+    if (telas.length === 0) return;
+
     telas[telaAtual].classList.remove("ativa");
-    if(pontos[telaAtual]) pontos[telaAtual].classList.remove("ativo");
+    if (pontos[telaAtual]) pontos[telaAtual].classList.remove("ativo");
 
     telaAtual = (telaAtual + 1) % telas.length;
 
     telas[telaAtual].classList.add("ativa");
-    if(pontos[telaAtual]) pontos[telaAtual].classList.add("ativo");
+    if (pontos[telaAtual]) pontos[telaAtual].classList.add("ativo");
 }
 
 setInterval(alternarTela, TEMPO_TROCA_SEGUNDOS * 1000);
@@ -731,6 +806,8 @@ function init() {
     atualizarData();
     renderizarTela1();
     montarAniversariantes();
+    gerarTelasImagens();
+    criarIndicadores();
     document.getElementById("ultimaAtualizacao").innerText = new Date().toLocaleTimeString("pt-BR");
 }
 
