@@ -17,7 +17,7 @@
     --cinza-texto: #8892b0;
     --branco: #f8f9fa;
 
-    /* TEMA ANIVERSARIANTES (VISUAL DA IMAGEM) */
+    /* TEMA ANIVERSARIANTES */
     --bg-aniv: #801313;
     --amarelo-aniv: #ffc82c;
     --laranja-aniv: #ff5722;
@@ -166,7 +166,7 @@ html, body {
 .rodape-tv { text-align: center; color: var(--cinza-texto); font-size: 12px; margin-top: 20px; }
 
 /* ==========================================
-   ESTILOS DINÂMICOS - TELA DE ANIVERSARIANTES (ESTILO CARTAZ)
+   ESTILOS - TELA DE ANIVERSARIANTES
    ========================================== */
 .tela-aniversario {
     background-color: var(--bg-aniv);
@@ -174,10 +174,8 @@ html, body {
         radial-gradient(circle at 10% 20%, #ff5722 4px, transparent 5px),
         radial-gradient(circle at 90% 15%, #ffc82c 6px, transparent 7px),
         radial-gradient(circle at 85% 80%, #ffffff 5px, transparent 6px),
-        radial-gradient(circle at 15% 85%, #ffc82c 5px, transparent 6px),
-        linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(255,255,255,0.04) 25%, transparent 25%);
-    background-size: 180px 180px, 220px 220px, 150px 150px, 200px 200px, 60px 60px, 60px 60px;
+        radial-gradient(circle at 15% 85%, #ffc82c 5px, transparent 6px);
+    background-size: 180px 180px, 220px 220px, 150px 150px, 200px 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -231,27 +229,6 @@ html, body {
     color: var(--amarelo-aniv);
     text-transform: uppercase;
     text-shadow: 2px 2px 0px #000;
-}
-
-.aniv-icones-caixa {
-    background: var(--amarelo-aniv);
-    padding: 4px 12px;
-    border-radius: 8px;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    border: 2px solid #000;
-    box-shadow: 3px 3px 0 #000;
-}
-
-.aniv-icones-caixa svg {
-    width: 28px;
-    height: 28px;
-    fill: none;
-    stroke: #1a237e;
-    stroke-width: 2.2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
 }
 
 /* GRID DE CARDS COM FOTO */
@@ -337,11 +314,13 @@ html, body {
     color: var(--amarelo-aniv);
 }
 
-.aniv-linha-detalhe {
-    display: inline-block;
-    width: 60px;
-    height: 2px;
-    background: var(--amarelo-aniv);
+.aniv-sem-dados {
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    padding: 20px 40px;
+    border-radius: 16px;
 }
 
 .fullscreen-button {
@@ -393,18 +372,13 @@ html, body {
     </div>
 </div>
 
-<!-- TELA 3: PAINEL ANIVERSARIANTES (NOVO VISUAL DINÂMICO) -->
+<!-- TELA 3: PAINEL ANIVERSARIANTES -->
 <div class="tela tela-aniversario" id="tela3">
     
     <div class="aniv-banner-header">
         <h1 class="aniv-titulo-principal">ANIVERSARIANTES</h1>
         <div class="aniv-sub-header">
             <span class="aniv-titulo-mes" id="tituloMesPainel">DO MÊS</span>
-            <div class="aniv-icones-caixa">
-                <svg viewBox="0 0 24 24"><path d="M20 21H4a2 2 0 0 1-2-2v-2h20v2a2 2 0 0 1-2 2zM2 15h20v-3a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v3zm10-9a2 2 0 0 0 2-2 2 2 0 0 0-4 0 2 2 0 0 0 2 2z"/></svg>
-                <svg viewBox="0 0 24 24"><path d="M6 21l6-18 6 18H6zM12 3v.01"/></svg>
-                <svg viewBox="0 0 24 24"><path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 0v10M7 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 0v8"/></svg>
-            </div>
         </div>
     </div>
 
@@ -412,11 +386,7 @@ html, body {
 
     <div class="aniv-rodape-mensagem">
         <p class="p1">Que este novo ciclo seja repleto de realizações.</p>
-        <p class="p2">
-            <span class="aniv-linha-detalhe"></span>
-            Feliz Aniversário!
-            <span class="aniv-linha-detalhe"></span>
-        </p>
+        <p class="p2">Feliz Aniversário! 🎉</p>
     </div>
 
 </div>
@@ -473,7 +443,7 @@ const listaAniversariantes = [
 ];
 
 /* =========================================================================
-   3. CÁLCULO E RENDERIZAÇÃO DA TELA 1
+   3. CÁLCULO E RENDERIZAÇÃO TELA 1
    ========================================================================= */
 function fmt(num) { return Number(num).toLocaleString('pt-BR'); }
 function fmtPct(num) {
@@ -483,6 +453,7 @@ function fmtPct(num) {
 
 function renderizarTela1() {
     const container = document.getElementById("cardsContainer");
+    if (!container) return;
     container.innerHTML = "";
 
     dadosEntrada.forEach(item => {
@@ -541,26 +512,31 @@ function renderizarTela1() {
 }
 
 /* =========================================================================
-   4. RENDERIZAÇÃO DINÂMICA DO CARTAZ DE ANIVERSARIANTES
+   4. RENDERIZAÇÃO PROTEGIDA DOS ANIVERSARIANTES
    ========================================================================= */
 function montarAniversariantes() {
     const grid = document.getElementById("gridAniversariantes");
+    if (!grid) return;
     grid.innerHTML = "";
 
     const hoje = new Date();
-    const mesAtualString = String(hoje.getMonth() + 1).padStart(2, "0");
+    const mesAtualNum = hoje.getMonth() + 1;
     let mesNome = hoje.toLocaleString("pt-BR", { month: "long" }).toUpperCase();
 
-    // Filtra aniversariantes do mês atual
+    // Filtro seguro tratando nulos e formatos inválidos
     let doMes = listaAniversariantes.filter(p => {
-        if (!p.dia || !p.dia.includes("/")) return false;
-        return p.dia.split("/")[1].padStart(2, "0") === mesAtualString;
+        if (!p || !p.dia || typeof p.dia !== 'string' || !p.dia.includes("/")) return false;
+        const partes = p.dia.split("/");
+        const mesItem = parseInt(partes[1], 10);
+        return mesItem === mesAtualNum;
     });
 
-    // Se o mês atual não tiver dados cadastrados, usa Setembro como modelo fallback
+    // Se o mês atual não tiver aniversariantes cadastrados, mostra mensagem amigável sem quebrar o layout
     if (doMes.length === 0) {
-        mesNome = "SETEMBRO";
-        doMes = listaAniversariantes.filter(p => p.dia.endsWith("/09"));
+        document.getElementById("tituloMesPainel").innerText = `DE ${mesNome}`;
+        document.getElementById("textoMesAniversario").innerText = `ANIVERSARIANTES DE ${mesNome}!`;
+        grid.innerHTML = `<div class="aniv-sem-dados">Nenhum aniversariante cadastrado em ${mesNome}.</div>`;
+        return;
     }
 
     document.getElementById("tituloMesPainel").innerText = `DE ${mesNome}`;
@@ -569,7 +545,7 @@ function montarAniversariantes() {
     doMes.sort((a, b) => parseInt(a.dia.split("/")[0], 10) - parseInt(b.dia.split("/")[0], 10));
 
     doMes.forEach(p => {
-        const urlFoto = (p.foto && p.foto.trim() !== "") ? p.foto : FOTO_PADRAO;
+        const urlFoto = (p.foto && typeof p.foto === 'string' && p.foto.trim() !== "") ? p.foto : FOTO_PADRAO;
         const card = document.createElement("div");
         card.className = "aniv-card";
         card.innerHTML = `
@@ -584,7 +560,7 @@ function montarAniversariantes() {
 }
 
 /* =========================================================================
-   5. ROTAÇÃO DE TELAS & UTILITÁRIOS
+   5. ROTAÇÃO DE TELAS
    ========================================================================= */
 const TEMPO_TROCA_SEGUNDOS = 12;
 let telaAtual = 0;
@@ -592,6 +568,7 @@ const telas = document.querySelectorAll(".tela");
 const pontos = document.querySelectorAll(".ponto");
 
 function alternarTela() {
+    if (telas.length === 0) return;
     telas[telaAtual].classList.remove("ativa");
     if(pontos[telaAtual]) pontos[telaAtual].classList.remove("ativo");
 
@@ -605,7 +582,8 @@ setInterval(alternarTela, TEMPO_TROCA_SEGUNDOS * 1000);
 
 function atualizarData() {
     const hoje = new Date();
-    document.getElementById("dataAtual").innerText = hoje.toLocaleDateString("pt-BR");
+    const elData = document.getElementById("dataAtual");
+    if (elData) elData.innerText = hoje.toLocaleDateString("pt-BR");
 
     const ultimoDia = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
     let diasRestantes = 0;
@@ -614,7 +592,8 @@ function atualizarData() {
         const dia = new Date(hoje.getFullYear(), hoje.getMonth(), d);
         if (dia.getDay() !== 0 && dia.getDay() !== 6) diasRestantes++;
     }
-    document.getElementById("diasRestantes").innerText = diasRestantes;
+    const elDias = document.getElementById("diasRestantes");
+    if (elDias) elDias.innerText = diasRestantes;
 }
 
 function telaCheia() {
@@ -629,10 +608,11 @@ function init() {
     atualizarData();
     renderizarTela1();
     montarAniversariantes();
-    document.getElementById("ultimaAtualizacao").innerText = new Date().toLocaleTimeString("pt-BR");
+    const elAtt = document.getElementById("ultimaAtualizacao");
+    if (elAtt) elAtt.innerText = new Date().toLocaleTimeString("pt-BR");
 }
 
-init();
+window.onload = init;
 
 </script>
 
