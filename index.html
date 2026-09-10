@@ -202,7 +202,7 @@ td.percent, td.proj-percent, td.saldo { font-weight: bold; color: #df0000; }
 
 .grid-meses {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
     gap: 20px;
 }
 
@@ -231,15 +231,33 @@ td.percent, td.proj-percent, td.saldo { font-weight: bold; color: #df0000; }
 
 .aniversariante-item {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     padding: 10px 0;
     border-bottom: 1px dashed #eee;
-    font-size: clamp(14px, 1.2vw, 18px);
+    font-size: clamp(14px, 1.1vw, 18px);
 }
 
 .aniversariante-item:last-child { border-bottom: none; }
+
+.aniversariante-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.aniversariante-foto {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff5252;
+    background-color: #eee;
+    flex-shrink: 0;
+}
+
 .aniversariante-item .nome { font-weight: bold; color: #333; }
-.aniversariante-item .dia { color: #ff5252; font-weight: bold; }
+.aniversariante-item .dia { color: #ff5252; font-weight: bold; margin-left: 10px; white-space: nowrap; }
 
 .fullscreen-button {
     position: fixed;
@@ -380,36 +398,41 @@ const indicadores = {
 };
 
 /* =====================================================
-   CADASTRO GERAL DE ANIVERSARIANTES (PODE DEIXAR TODOS AQUI)
+   CADASTRO GERAL DE ANIVERSARIANTES (COM LINK DA FOTO)
    ===================================================== */
+const FOTO_PADRAO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23cccccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
+
 const listaAniversariantes = [
-    { nome: "Leyson Renan Batista de Oliveira", dia: "25/01" },
-    { nome: "Sara Barbosa Vilar", dia: "27/01" },
-    { nome: "Arlinda Maria Batista Neta Reis", dia: "26/02" },
-    { nome: "Alice Mariano Ramos", dia: "23/03" },
-    { nome: "Luciana Fernandes Lacerda", dia: "10/04" },
-    { nome: "Fernando Paulo dos Santos Pereira", dia: "18/05" },
-    { nome: "Daniela Vanessa Bianchi", dia: "22/05" },
-    { nome: "Ana Julia Camargo", dia: "04/06" },
-    { nome: "Tainara Livia Rocha", dia: "20/06" },
-    { nome: "Mariana Nunes Silva", dia: "12/07" },
-    { nome: "Bianca Vieira Vulcani", dia: "03/08" },
-    { nome: "Diego Correa dos Santos", dia: "17/08" },
-    { nome: "Sabatha Melissa Santana Novais", dia: "21/08" },
-    { nome: "Gabrielly dos Santos", dia: "25/08" },
-    { nome: "Geovana Pereira dos Santos", dia: "01/09" },
-    { nome: "João Victor Vitoriano da Silva", dia: "04/09" },
-    { nome: "Rafael Gustavo Angelotti Silva", dia: "16/09" },
-    { nome: "Jade Oliveira Franco da Silva", dia: "19/09" },
-    { nome: "Karyna Cristina Meira Bento", dia: "24/09" },
-    { nome: "Luiz Gustavo Damas da Silva", dia: "10/10" },
-    { nome: "Claudia Fernanda Pin de Mattos", dia: "16/10" },
-    { nome: "Rafael da Silva Batista Tolli", dia: "16/10" },
-    { nome: "Clara Marcelino da Silva", dia: "02/12" },
-    { nome: "Thierry Rodrigues Dias", dia: "19/12" },
-    { nome: "Amanda Cristina Aparecida Silva", dia: "21/12" },
-    { nome: "Maria Clara Vieira Caires", dia: "26/12" },
-    { nome: "Fernando Paulo dos Santos Pereira", dia: "18/05" }
+    { nome: "Leyson Renan Batista de Oliveira", dia: "25/01", foto: "" },
+    { nome: "Sara Barbosa Vilar", dia: "27/01", foto: "" },
+    { nome: "Arlinda Maria Batista Neta Reis", dia: "26/02", foto: "" },
+    { nome: "Alice Mariano Ramos", dia: "23/03", foto: "" },
+    { nome: "Luciana Fernandes Lacerda", dia: "10/04", foto: "" },
+    { 
+        nome: "Fernando Paulo dos Santos Pereira", 
+        dia: "18/05", 
+        foto: "https://media.licdn.com/dms/image/v2/D4D03AQFR92WyH72eQw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732812678925?e=1790812800&v=beta&t=PdNNXjNSD-KpI4vB1npypp0zStisqRSxeOnzOjbcXEc" 
+    },
+    { nome: "Daniela Vanessa Bianchi", dia: "22/05", foto: "" },
+    { nome: "Ana Julia Camargo", dia: "04/06", foto: "" },
+    { nome: "Tainara Livia Rocha", dia: "20/06", foto: "" },
+    { nome: "Mariana Nunes Silva", dia: "12/07", foto: "" },
+    { nome: "Bianca Vieira Vulcani", dia: "03/08", foto: "" },
+    { nome: "Diego Correa dos Santos", dia: "17/08", foto: "" },
+    { nome: "Sabatha Melissa Santana Novais", dia: "21/08", foto: "" },
+    { nome: "Gabrielly dos Santos", dia: "25/08", foto: "" },
+    { nome: "Geovana Pereira dos Santos", dia: "01/09", foto: "" },
+    { nome: "João Victor Vitoriano da Silva", dia: "04/09", foto: "" },
+    { nome: "Rafael Gustavo Angelotti Silva", dia: "16/09", foto: "" },
+    { nome: "Jade Oliveira Franco da Silva", dia: "19/09", foto: "" },
+    { nome: "Karyna Cristina Meira Bento", dia: "24/09", foto: "" },
+    { nome: "Luiz Gustavo Damas da Silva", dia: "10/10", foto: "" },
+    { nome: "Claudia Fernanda Pin de Mattos", dia: "16/10", foto: "" },
+    { nome: "Rafael da Silva Batista Tolli", dia: "16/10", foto: "" },
+    { nome: "Clara Marcelino da Silva", dia: "02/12", foto: "" },
+    { nome: "Thierry Rodrigues Dias", dia: "19/12", foto: "" },
+    { nome: "Amanda Cristina Aparecida Silva", dia: "21/12", foto: "" },
+    { nome: "Maria Clara Vieira Caires", dia: "26/12", foto: "" }
 ];
 
 /* =====================================================
@@ -544,18 +567,16 @@ function montarIndicadores() {
 }
 
 /* =====================================================
-   FILTRO AUTOMÁTICO DE ANIVERSARIANTES DO MÊS
+   FILTRO AUTOMÁTICO E EXIBIÇÃO DE FOTOS
    ===================================================== */
 function montarAniversariantes() {
     const grid = document.getElementById("gridAniversariantes");
     grid.innerHTML = "";
 
     const hoje = new Date();
-    // Obtém o mês atual formatado com 2 dígitos (ex: "09" para Setembro, "10" para Outubro)
     const mesAtualString = String(hoje.getMonth() + 1).padStart(2, "0");
     const mesNome = hoje.toLocaleString("pt-BR", { month: "long" }).toUpperCase();
 
-    // Filtra apenas os aniversariantes cujo mês do campo "dia" bate com o mês atual
     const doMes = listaAniversariantes.filter(p => {
         if (!p.dia || !p.dia.includes("/")) return false;
         const partes = p.dia.split("/");
@@ -563,7 +584,6 @@ function montarAniversariantes() {
         return mesPessoa === mesAtualString;
     });
 
-    // Ordena por dia do mês crescente (ex: 04/09 antes de 25/09)
     doMes.sort((a, b) => {
         const diaA = parseInt(a.dia.split("/")[0], 10);
         const diaB = parseInt(b.dia.split("/")[0], 10);
@@ -575,9 +595,13 @@ function montarAniversariantes() {
 
     let htmlItens = "";
     doMes.forEach(p => {
+        const urlFoto = (p.foto && p.foto.trim() !== "") ? p.foto : FOTO_PADRAO;
         htmlItens += `
             <div class="aniversariante-item">
-                <span class="nome">${p.nome}</span>
+                <div class="aniversariante-info">
+                    <img src="${urlFoto}" class="aniversariante-foto" alt="${p.nome}" onerror="this.src='${FOTO_PADRAO}'">
+                    <span class="nome">${p.nome}</span>
+                </div>
                 <span class="dia">${p.dia}</span>
             </div>
         `;
