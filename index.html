@@ -32,51 +32,69 @@ html, body {
     overflow: hidden;
 }
 
-/* ==========================================
-   ROTAÇÃO E TRANSIÇÃO DE TELAS
-   ========================================== */
-.tela {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    padding: 30px;
-    width: 100vw;
-    height: 100vh;
+/* =========================================================================
+   5. ROTAÇÃO DE TELAS & UTILITÁRIOS
+   ========================================================================= */
+let telaAtual = 0;
+let telas = [];
+let pontos = [];
+let timerRotacao = null; // Guardará o temporizador ativo
+
+function criarIndicadores() {
+    telas = document.querySelectorAll(".tela");
+    const containerIndicadores = document.getElementById("indicadorTelas");
+    containerIndicadores.innerHTML = "";
+
+    telas.forEach((_, i) => {
+        const ponto = document.createElement("div");
+        ponto.className = `ponto ${i === 0 ? 'ativo' : ''}`;
+        containerIndicadores.appendChild(ponto);
+    });
+
+    pontos = document.querySelectorAll(".ponto");
 }
 
-.tela.ativa {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    opacity: 1;
+function alternarTela() {
+    if (telas.length === 0) return;
+
+    // Remove a classe ativa da tela e ponto anteriores
+    telas[telaAtual].classList.remove("ativa");
+    if (pontos[telaAtual]) pontos[telaAtual].classList.remove("ativo");
+
+    // Avança para a próxima tela
+    telaAtual = (telaAtual + 1) % telas.length;
+
+    // Ativa a nova tela e ponto
+    telas[telaAtual].classList.add("ativa");
+    if (pontos[telaAtual]) pontos[telaAtual].classList.add("ativo");
+
+    // Agenda o próximo ciclo de troca
+    agendarProximaTroca();
 }
 
-.indicador-telas {
-    position: fixed;
-    top: 20px;
-    right: 25px;
-    display: flex;
-    gap: 10px;
-    z-index: 9999;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(8px);
-    padding: 8px 16px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
+function agendarProximaTroca() {
+    // Limpa temporizador anterior para evitar loops duplicados
+    if (timerRotacao) clearTimeout(timerRotacao);
+
+    // Se estiver na PRIMEIRA tela (índice 0), aguarda 50 segundos. Nas DEMAIS, 12 segundos.
+    const tempoEspera = (telaAtual === 0) ? 50000 : 12000;
+
+    timerRotacao = setTimeout(alternarTela, tempoEspera);
 }
 
-.ponto {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    transition: all 0.3s ease;
+function init() {
+    atualizarData();
+    renderizarTela1();
+    montarAniversariantes();
+    gerarTelasImagens();
+    criarIndicadores();
+    document.getElementById("ultimaAtualizacao").innerText = new Date().toLocaleTimeString("pt-BR");
+
+    // Inicia a rotação dinâmica de telas
+    agendarProximaTroca();
 }
 
-.ponto.ativo {
-    background: var(--cyan);
-    box-shadow: 0 0 10px var(--cyan);
-}
+init();
 
 /* ==========================================
    ESTILOS - TELA 1 (DASHBOARD REDESENHADO)
@@ -705,7 +723,7 @@ function renderizarTela1() {
 /* =========================================================================
    5. ROTAÇÃO DE TELAS & UTILITÁRIOS
    ========================================================================= */
-const TEMPO_TROCA_SEGUNDOS = 12;
+const TEMPO_TROCA_SEGUNDOS = 20;
 let telaAtual = 0;
 let telas = [];
 let pontos = [];
