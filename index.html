@@ -7,17 +7,16 @@
 
 <style>
 :root {
-    --azul: #062b67;
-    --azul2: #0b3b82;
-    --azul-claro: #dcecff;
-    --cinza: #bdbdbd;
-    --realizado: #a9d9ef;
-    --verde: #0a9f52;
-    --vermelho: #d71920;
-    --laranja: #f28c28;
-    --branco: #fff;
-    --fundo: #f5f7fa;
-    --texto: #222;
+    --azul-escuro: #0a192f;
+    --azul-card: #112240;
+    --azul-hover: #1d3557;
+    --azul-destaque: #0077b6;
+    --cyan: #00f5d4;
+    --verde: #2ec4b6;
+    --vermelho: #e63946;
+    --amarelo: #ffb703;
+    --cinza-texto: #8892b0;
+    --branco: #f8f9fa;
 }
 
 * { box-sizing: border-box; }
@@ -27,10 +26,10 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--fundo);
-    color: var(--texto);
-    overflow-x: hidden;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--azul-escuro);
+    color: var(--branco);
+    overflow: hidden;
 }
 
 /* ==========================================
@@ -40,116 +39,268 @@ html, body {
     display: none;
     opacity: 0;
     transition: opacity 0.8s ease-in-out;
-    padding: 20px;
-    width: 100%;
-    min-height: 100vh;
+    padding: 30px;
+    width: 100vw;
+    height: 100vh;
 }
 
 .tela.ativa {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     opacity: 1;
 }
 
-/* INDICADOR DE TELAS NO CANTO SUPERIOR */
 .indicador-telas {
     position: fixed;
-    top: 12px;
-    right: 20px;
+    top: 20px;
+    right: 25px;
     display: flex;
-    gap: 8px;
+    gap: 10px;
     z-index: 9999;
-    background: rgba(255,255,255,0.8);
-    padding: 6px 12px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    padding: 8px 16px;
     border-radius: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .ponto {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: #ccc;
-    transition: background 0.3s;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
 }
 
 .ponto.ativo {
-    background: var(--azul);
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
 }
 
 /* ==========================================
-   ESTILOS - TELA 1 (DASHBOARD RECUPERAÇÃO)
+   ESTILOS - TELA 1 (DASHBOARD REDESENHADO)
    ========================================== */
-.dashboard { width: 100%; max-width: 1500px; margin: auto; }
-.header { text-align: center; margin-bottom: 12px; }
-.header h1 { color: #064ca0; font-size: clamp(22px, 2.2vw, 36px); margin: 0 0 5px; }
-.header .data { color: #e45f00; font-size: clamp(13px, 1.1vw, 20px); font-weight: bold; }
-.header .faltam { color: #0878c9; font-size: clamp(13px, 1.1vw, 20px); font-weight: bold; margin-top: 4px; }
+.header-tv {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-.table-container { overflow-x: auto; border-radius: 5px; }
-table { width: 100%; border-collapse: collapse; background: white; font-size: clamp(11px, 0.9vw, 17px); }
-thead tr:first-child th { background: var(--azul); color: white; font-size: 1.05em; padding: 5px; }
-thead tr:nth-child(2) th { background: #e7e7e7; color: #222; }
-th, td { border: 1px solid #d0d0d0; padding: 5px 7px; text-align: right; white-space: nowrap; }
-th:first-child, td:first-child { text-align: left; }
-td.percent, td.proj-percent, td.saldo { font-weight: bold; color: #df0000; }
+.header-tv h1 {
+    font-size: clamp(28px, 2.5vw, 44px);
+    margin: 0;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ffffff, var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 16px; }
-.card { background: white; border-radius: 12px; padding: 18px 22px; box-shadow: 0 2px 8px rgba(0,0,0,.08); border-left: 6px solid var(--azul); }
-.card.orange { border-left-color: var(--laranja); }
-.card .label { font-size: clamp(13px, 1vw, 18px); color: #555; margin-bottom: 5px; }
-.card .value { font-size: clamp(22px, 2vw, 36px); font-weight: bold; color: var(--azul); }
-.card.orange .value { color: #e35c00; }
-.card .description { font-size: clamp(11px, .85vw, 15px); color: #666; margin-top: 4px; }
+.header-tv .sub {
+    font-size: clamp(14px, 1.2vw, 22px);
+    color: var(--cinza-texto);
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
 
-.chart-box { background: white; border: 1px solid #d4d4d4; border-radius: 14px; margin-top: 16px; padding: 15px 18px 12px; }
-.chart-title { text-align: center; font-size: clamp(18px, 1.5vw, 26px); color: #555; margin-bottom: 8px; }
-.chart { height: clamp(230px, 30vh, 380px); display: flex; align-items: flex-end; justify-content: space-around; position: relative; border-bottom: 1px solid #ddd; padding: 25px 3% 0; }
-.group { width: 28%; height: 100%; display: flex; align-items: flex-end; justify-content: center; gap: clamp(5px, .8vw, 15px); position: relative; }
-.bar-wrapper { height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 25%; }
-.bar { width: 100%; min-width: 20px; max-width: 70px; border-radius: 2px 2px 0 0; transition: height .8s ease; }
-.bar.meta { background: #bdbdbd; }
-.bar.realizado { background: #a9d9ef; }
-.bar.projecao { background: #062b67; }
-.bar-value { font-size: clamp(10px, .8vw, 15px); margin-bottom: 4px; color: #444; white-space: nowrap; }
-.group-name { position: absolute; bottom: -27px; font-size: clamp(11px, .9vw, 16px); color: #555; }
-.legend { display: flex; justify-content: center; gap: 22px; margin-top: 38px; font-size: clamp(11px, .8vw, 15px); }
-.legend-item { display: flex; align-items: center; gap: 5px; }
-.legend-color { width: 12px; height: 12px; }
+.header-tv .sub span {
+    color: var(--amarelo);
+    font-weight: bold;
+}
 
-.info { margin-top: 18px; background: white; border-radius: 10px; padding: 14px 18px; font-size: clamp(11px, .85vw, 16px); line-height: 1.45; }
-.info .highlight { color: #e44e00; font-weight: bold; margin-bottom: 3px; }
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 1700px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.card-faixa {
+    background: var(--azul-card);
+    border-radius: 20px;
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-faixa::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--azul-destaque), var(--cyan));
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+}
+
+.card-header .titulo {
+    font-size: clamp(22px, 1.8vw, 30px);
+    font-weight: 800;
+    color: var(--branco);
+}
+
+.card-header .meta-badge {
+    background: rgba(255,255,255,0.06);
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: clamp(12px, 1vw, 16px);
+    color: var(--cinza-texto);
+}
+
+.card-header .meta-badge strong {
+    color: var(--branco);
+}
+
+/* BLANCOS DE RESULTADOS PRINCIPAIS */
+.metricas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.metrica-box {
+    background: rgba(0,0,0,0.25);
+    padding: 15px;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.metrica-box .rotulo {
+    font-size: clamp(11px, 0.85vw, 14px);
+    color: var(--cinza-texto);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.metrica-box .valor {
+    font-size: clamp(22px, 2vw, 34px);
+    font-weight: 800;
+}
+
+.metrica-box .pct {
+    font-size: clamp(12px, 0.9vw, 16px);
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+/* CORES DINÂMICAS DE STATUS */
+.status-negativo { color: var(--vermelho); }
+.status-positivo { color: var(--verde); }
+
+/* BARRAS DE PROGRESSO */
+.progresso-container {
+    margin-bottom: 15px;
+}
+
+.progresso-rotulo {
+    display: flex;
+    justify-content: space-between;
+    font-size: clamp(11px, 0.85vw, 14px);
+    color: var(--cinza-texto);
+    margin-bottom: 6px;
+}
+
+.barra-bg {
+    width: 100%;
+    height: 12px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.barra-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
+}
+
+.barra-fill.realizado { background: linear-gradient(90deg, #3a86ff, #00f5d4); }
+.barra-fill.projecao { background: linear-gradient(90deg, #ffb703, #fb8500); }
+
+/* FOOTER DO CARD (SALDOS) */
+.card-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: rgba(255,255,255,0.03);
+    padding: 12px;
+    border-radius: 12px;
+    font-size: clamp(11px, 0.85vw, 14px);
+}
+
+.card-footer div {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-footer span:first-child {
+    color: var(--cinza-texto);
+}
+
+.card-footer span:last-child {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 2px;
+}
+
+.rodape-tv {
+    text-align: center;
+    color: var(--cinza-texto);
+    font-size: 12px;
+    margin-top: 20px;
+}
 
 /* ==========================================
-   ESTILOS - TELA 2 (INTRO ANIVERSARIANTES)
+   ESTILOS - TELAS DE ANIVERSARIANTES
    ========================================== */
 .intro-aniversarios {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 85vh;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    border-radius: 20px;
+    height: 100%;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+    border-radius: 24px;
     color: white;
     text-align: center;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .intro-aniversarios h2 {
-    font-size: clamp(32px, 5vw, 64px);
+    font-size: clamp(36px, 5vw, 70px);
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+    text-shadow: 0 5px 20px rgba(0,0,0,0.5);
     animation: pulse 2s infinite alternate;
 }
 
 .intro-aniversarios p {
-    font-size: clamp(18px, 2.5vw, 32px);
-    margin-top: 15px;
-    color: #ffd700;
+    font-size: clamp(20px, 2.5vw, 36px);
+    margin-top: 20px;
+    color: var(--amarelo);
     font-weight: bold;
 }
 
@@ -165,114 +316,114 @@ td.percent, td.proj-percent, td.saldo { font-weight: bold; color: #df0000; }
     height: 70px;
     border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
     animation: subir 6s infinite linear;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 @keyframes subir {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-    100% { transform: translateY(-900px) rotate(20deg); opacity: 0; }
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+    100% { transform: translateY(-1000px) rotate(20deg); opacity: 0; }
 }
 
-/* ==========================================
-   ESTILOS - TELA 3 (PAINEL ANIVERSARIANTES)
-   ========================================== */
 .aniversariantes-container {
-    max-width: 1500px;
+    max-width: 1400px;
     margin: auto;
-    background: #eef9ff;
-    border-radius: 20px;
-    padding: 25px;
-    min-height: 85vh;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    width: 100%;
+    background: var(--azul-card);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
 .aniversariantes-header {
     text-align: center;
-    background: #ff5252;
+    background: linear-gradient(90deg, #e63946, #d62828);
     color: white;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-    font-size: clamp(22px, 3vw, 38px);
-    font-weight: bold;
+    padding: 18px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 10px rgba(255,82,82,0.3);
+    letter-spacing: 1.5px;
+    box-shadow: 0 4px 20px rgba(230,57,70,0.4);
 }
 
 .grid-meses {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-    gap: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .card-mes {
-    background: white;
-    border-radius: 12px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-    border: 1px solid #e0e0e0;
+    width: 100%;
+    max-width: 800px;
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
 .card-mes-topo {
-    padding: 12px;
+    padding: 16px;
     text-align: center;
     color: white;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.5em;
     text-transform: uppercase;
-    background: #e91e63;
+    background: rgba(255,255,255,0.05);
+    letter-spacing: 1px;
 }
 
 .card-mes-corpo {
-    padding: 18px;
-    min-height: 120px;
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .aniversariante-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px dashed #eee;
-    font-size: clamp(14px, 1.1vw, 18px);
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    font-size: clamp(16px, 1.2vw, 22px);
 }
-
-.aniversariante-item:last-child { border-bottom: none; }
 
 .aniversariante-info {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
 }
 
 .aniversariante-foto {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #ff5252;
-    background-color: #eee;
+    border: 2px solid var(--cyan);
+    background-color: #222;
     flex-shrink: 0;
 }
 
-.aniversariante-item .nome { font-weight: bold; color: #333; }
-.aniversariante-item .dia { color: #ff5252; font-weight: bold; margin-left: 10px; white-space: nowrap; }
+.aniversariante-item .nome { font-weight: 600; color: var(--branco); }
+.aniversariante-item .dia { color: var(--cyan); font-weight: bold; white-space: nowrap; }
 
 .fullscreen-button {
     position: fixed;
-    right: 15px;
-    bottom: 15px;
-    background: var(--azul);
+    right: 20px;
+    bottom: 20px;
+    background: rgba(255,255,255,0.1);
     color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 10px 18px;
+    border-radius: 10px;
     cursor: pointer;
-    opacity: .65;
+    backdrop-filter: blur(5px);
     z-index: 9999;
 }
-.fullscreen-button:hover { opacity: 1; }
+.fullscreen-button:hover { background: rgba(255,255,255,0.2); }
 </style>
 </head>
 
@@ -284,88 +435,37 @@ td.percent, td.proj-percent, td.saldo { font-weight: bold; color: #df0000; }
     <div class="ponto"></div>
 </div>
 
-<!-- TELA 1: RECUPERAÇÃO -->
+<!-- TELA 1: RECUPERAÇÃO (LAYOUT SIMPLIFICADO & DINÂMICO PARA TV) -->
 <div class="tela ativa" id="tela1">
-    <div class="dashboard">
-        <header class="header">
-            <h1>Acompanhamento de Recuperação - Campanha</h1>
-            <div class="data">Data atual: <span id="dataAtual"></span> - Projeção em D0</div>
-            <div class="faltam">Faltam <span id="diasRestantes"></span> dias de trabalho para acabar o mês.</div>
-        </header>
-
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th colspan="9" style="text-align:center">Desktop</th>
-                    </tr>
-                    <tr>
-                        <th>Faixa</th>
-                        <th>Meta</th>
-                        <th>Realizado</th>
-                        <th>Realizado %</th>
-                        <th>Projeção</th>
-                        <th>Projeção %</th>
-                        <th>Saldo Proj.</th>
-                        <th>Saldo Proj. %</th>
-                        <th>Saldo</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelaDados"></tbody>
-            </table>
+    <div class="header-tv">
+        <h1>Acompanhamento de Recuperação</h1>
+        <div class="sub">
+            <div>Data: <span id="dataAtual">--/--/----</span></div>
+            <div>Faltam <span id="diasRestantes">--</span> dias úteis</div>
         </div>
+    </div>
 
-        <div class="chart-box">
-            <div class="chart-title">Produtividade Recuperação</div>
-            <div class="chart" id="grafico"></div>
-            <div class="legend">
-                <div class="legend-item"><span class="legend-color" style="background:#bdbdbd"></span> Meta</div>
-                <div class="legend-item"><span class="legend-color" style="background:#a9d9ef"></span> Realizado</div>
-                <div class="legend-item"><span class="legend-color" style="background:#062b67"></span> Projeção</div>
-            </div>
-        </div>
+    <div class="dashboard-grid" id="cardsContainer">
+        <!-- Cards gerados via JS dinamicamente -->
+    </div>
 
-        <div class="cards">
-            <div class="card orange">
-                <div class="label">Recuperação do Back-Log</div>
-                <div class="value"><span id="backlogRecuperado"></span></div>
-                <div class="description">de <span id="backlogTotal"></span> - Percentual recuperado <strong id="backlogPercentual"></strong></div>
-            </div>
-            <div class="card orange">
-                <div class="label">Recuperação na Faixa 30D</div>
-                <div class="value"><span id="faixa30Recuperado"></span></div>
-                <div class="description">de <span id="faixa30Total"></span> - Percentual recuperado <strong id="faixa30Percentual"></strong></div>
-            </div>
-        </div>
-
-        <div class="info">
-            <div class="highlight">Faixa: Tempo de atraso dos contratos trabalhados (60, 90 e 120 dias).</div>
-            <div><strong>Meta:</strong> Objetivo total de recuperação estipulado para o mês.</div>
-            <div><strong>Realizado / Realizado %:</strong> Volume já recuperado e o quanto ele representa da meta.</div>
-            <div><strong>Projeção / Projeção %:</strong> Estimativa de onde a operação vai chegar no fim do mês se mantiver o ritmo atual.</div>
-            <div><strong>Saldo Proj. / Saldo Proj. %:</strong> O quanto vamos passar da meta (positivo) ou o quanto vai faltar (negativo).</div>
-            <div><strong>Saldo:</strong> O valor que ainda falta recuperar em relação à meta do mês (Realizado menos Meta).</div>
-        </div>
-
-        <div style="text-align: center; color: #777; font-size: 11px; margin-top: 10px;">
-            Última atualização: <span id="ultimaAtualizacao"></span>
-        </div>
+    <div class="rodape-tv">
+        Atualizado automaticamente • <span id="ultimaAtualizacao"></span>
     </div>
 </div>
 
 <!-- TELA 2: INTRO ANIVERSARIANTES -->
 <div class="tela" id="tela2">
     <div class="intro-aniversarios">
-        <div class="balao" style="left: 10%; background: #ff5252; animation-delay: 0s;"></div>
-        <div class="balao" style="left: 25%; background: #ffeb3b; animation-delay: 1.5s;"></div>
-        <div class="balao" style="left: 40%; background: #2196f3; animation-delay: 0.5s;"></div>
-        <div class="balao" style="left: 60%; background: #4caf50; animation-delay: 2s;"></div>
-        <div class="balao" style="left: 75%; background: #e91e63; animation-delay: 1s;"></div>
-        <div class="balao" style="left: 90%; background: #00bcd4; animation-delay: 2.5s;"></div>
+        <div class="balao" style="left: 10%; background: #e63946; animation-delay: 0s;"></div>
+        <div class="balao" style="left: 25%; background: #ffb703; animation-delay: 1.5s;"></div>
+        <div class="balao" style="left: 40%; background: #00f5d4; animation-delay: 0.5s;"></div>
+        <div class="balao" style="left: 60%; background: #2ec4b6; animation-delay: 2s;"></div>
+        <div class="balao" style="left: 75%; background: #e0aaff; animation-delay: 1s;"></div>
+        <div class="balao" style="left: 90%; background: #3a86ff; animation-delay: 2.5s;"></div>
 
         <h2>🎈 Aniversariantes 🎈</h2>
-        <p id="textoMesAniversario">A seguir, confira os aniversariantes do mês!</p>
+        <p id="textoMesAniversario">Confira quem celebra este mês!</p>
     </div>
 </div>
 
@@ -383,24 +483,19 @@ td.percent, td.proj-percent, td.saldo { font-weight: bold; color: #df0000; }
 
 <script>
 
-/* =====================================================
-   DADOS DE RECUPERAÇÃO
-   ===================================================== */
-const dados = {
-    "60 dias": { meta: 3500, realizado: 1519, projecao: 3299 },
-    "90 dias": { meta: 2500, realizado: 849, projecao: 2403 },
-    "120 dias": { meta: 1200, realizado: 471, projecao: 1180 }
-};
+/* =========================================================================
+   1. APENAS ATUALIZE ESTE BLOCO DE DADOS (DADOS DE ENTRADA)
+   ========================================================================= */
+const dadosEntrada = [
+    { faixa: "60 dias",  meta: 3500, realizado: 1591, projecao: 3053 },
+    { faixa: "90 dias",  meta: 2500, realizado: 882,  projecao: 2440 },
+    { faixa: "120 dias", meta: 1200, realizado: 494,  projecao: 1190 }
+];
 
-const indicadores = {
-    backlog: { recuperado: 34, total: 1230 },
-    faixa30: { recuperado: 67613, total: 101880 }
-};
-
-/* =====================================================
-   CADASTRO GERAL DE ANIVERSARIANTES (COM LINK DA FOTO)
-   ===================================================== */
-const FOTO_PADRAO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23cccccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
+/* =========================================================================
+   2. LISTA DE ANIVERSARIANTES
+   ========================================================================= */
+const FOTO_PADRAO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%238892b0'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
 
 const listaAniversariantes = [
     { nome: "Leyson Renan Batista de Oliveira", dia: "25/01", foto: "" },
@@ -435,9 +530,96 @@ const listaAniversariantes = [
     { nome: "Maria Clara Vieira Caires", dia: "26/12", foto: "" }
 ];
 
-/* =====================================================
-   ROTAÇÃO DE TELAS
-   ===================================================== */
+/* =========================================================================
+   3. LÓGICA DE CÁLCULO E RENDERIZAÇÃO DA TELA 1 (TV CARD LAYOUT)
+   ========================================================================= */
+function fmt(num) {
+    return Number(num).toLocaleString('pt-BR');
+}
+
+function fmtPct(num) {
+    const p = (num * 100).toFixed(0);
+    return (p > 0 ? "+" : "") + p + "%";
+}
+
+function renderizarTela1() {
+    const container = document.getElementById("cardsContainer");
+    container.innerHTML = "";
+
+    dadosEntrada.forEach(item => {
+        // Cálculos Automáticos idênticos à planilha fornecida
+        const realizadoPct = item.realizado / item.meta;
+        const projecaoPct = item.projecao / item.meta;
+        const saldoProj = item.projecao - item.meta;
+        const saldoProjPct = saldoProj / item.meta;
+        const saldo = item.realizado - item.meta;
+
+        const card = document.createElement("div");
+        card.className = "card-faixa";
+
+        card.innerHTML = `
+            <div class="card-header">
+                <span class="titulo">${item.faixa}</span>
+                <span class="meta-badge">Meta: <strong>${fmt(item.meta)}</strong></span>
+            </div>
+
+            <div class="metricas-grid">
+                <div class="metrica-box">
+                    <div class="rotulo">Realizado</div>
+                    <div class="valor" style="color: var(--cyan);">${fmt(item.realizado)}</div>
+                    <div class="pct status-negativo">${(realizadoPct * 100).toFixed(0)}%</div>
+                </div>
+
+                <div class="metrica-box">
+                    <div class="rotulo">Projeção</div>
+                    <div class="valor" style="color: var(--amarelo);">${fmt(item.projecao)}</div>
+                    <div class="pct status-negativo">${(projecaoPct * 100).toFixed(0)}%</div>
+                </div>
+            </div>
+
+            <div class="progresso-container">
+                <div class="progresso-rotulo">
+                    <span>Progresso Realizado</span>
+                    <span>${(realizadoPct * 100).toFixed(0)}%</span>
+                </div>
+                <div class="barra-bg">
+                    <div class="barra-fill realizado" style="width: ${Math.min(realizadoPct * 100, 100)}%;"></div>
+                </div>
+            </div>
+
+            <div class="progresso-container">
+                <div class="progresso-rotulo">
+                    <span>Progresso Projeção</span>
+                    <span>${(projecaoPct * 100).toFixed(0)}%</span>
+                </div>
+                <div class="barra-bg">
+                    <div class="barra-fill projecao" style="width: ${Math.min(projecaoPct * 100, 100)}%;"></div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <div>
+                    <span>Saldo Proj.</span>
+                    <span class="${saldoProj >= 0 ? 'status-positivo' : 'status-negativo'}">
+                        ${fmt(saldoProj)} (${fmtPct(saldoProjPct)})
+                    </span>
+                </div>
+                <div>
+                    <span>Saldo Atual</span>
+                    <span class="${saldo >= 0 ? 'status-positivo' : 'status-negativo'}">
+                        ${fmt(saldo)}
+                    </span>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+/* =========================================================================
+   4. ROTAÇÃO DE TELAS & UTILITÁRIOS
+   ========================================================================= */
 const TEMPO_TROCA_SEGUNDOS = 12;
 let telaAtual = 0;
 const telas = document.querySelectorAll(".tela");
@@ -455,15 +637,6 @@ function alternarTela() {
 
 setInterval(alternarTela, TEMPO_TROCA_SEGUNDOS * 1000);
 
-/* =====================================================
-   FUNÇÕES AUXILIARES
-   ===================================================== */
-function numero(valor) { return Number(valor).toLocaleString("pt-BR"); }
-function percentualDecimal(valor, total) {
-    if (!total) return "0,00%";
-    return ((valor / total) * 100).toFixed(2).replace(".", ",") + "%";
-}
-
 function atualizarData() {
     const hoje = new Date();
     document.getElementById("dataAtual").innerText = hoje.toLocaleDateString("pt-BR");
@@ -478,97 +651,9 @@ function atualizarData() {
     document.getElementById("diasRestantes").innerText = diasRestantes;
 
     const mesNome = hoje.toLocaleString("pt-BR", { month: "long" });
-    document.getElementById("textoMesAniversario").innerText = `Confira os Aniversariantes de ${mesNome.toUpperCase()}!`;
+    document.getElementById("textoMesAniversario").innerText = `Aniversariantes de ${mesNome.toUpperCase()}!`;
 }
 
-function montarTabela() {
-    const tbody = document.getElementById("tabelaDados");
-    tbody.innerHTML = "";
-
-    Object.entries(dados).forEach(([faixa, item]) => {
-        const realizadoPct = item.realizado / item.meta;
-        const projPct = item.projecao / item.meta;
-        const saldoProj = item.projecao - item.meta;
-        const saldo = item.realizado - item.meta;
-        const saldoProjPct = saldoProj / item.meta;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${faixa}</td>
-            <td>${numero(item.meta)}</td>
-            <td>${numero(item.realizado)}</td>
-            <td class="percent">${(realizadoPct * 100).toFixed(0)}%</td>
-            <td>${numero(item.projecao)}</td>
-            <td class="proj-percent">${(projPct * 100).toFixed(0)}%</td>
-            <td class="saldo">${saldoProj > 0 ? "+" : ""}${numero(saldoProj)}</td>
-            <td class="saldo">${saldoProjPct >= 0 ? "+" : ""}${(saldoProjPct * 100).toFixed(0)}%</td>
-            <td class="saldo">${numero(saldo)}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
-
-function montarGrafico() {
-    const grafico = document.getElementById("grafico");
-    grafico.innerHTML = "";
-
-    const valores = [];
-    Object.values(dados).forEach(item => {
-        valores.push(item.meta, item.realizado, item.projecao);
-    });
-    const maximo = Math.max(...valores) * 1.15;
-
-    Object.entries(dados).forEach(([faixa, item]) => {
-        const group = document.createElement("div");
-        group.className = "group";
-
-        const barras = [
-            { valor: item.meta, classe: "meta" },
-            { valor: item.realizado, classe: "realizado" },
-            { valor: item.projecao, classe: "projecao" }
-        ];
-
-        barras.forEach(barra => {
-            const wrapper = document.createElement("div");
-            wrapper.className = "bar-wrapper";
-
-            const valor = document.createElement("div");
-            valor.className = "bar-value";
-            valor.innerText = numero(barra.valor);
-
-            const bar = document.createElement("div");
-            bar.className = "bar " + barra.classe;
-            bar.style.height = ((barra.valor / maximo) * 100) + "%";
-
-            wrapper.appendChild(valor);
-            wrapper.appendChild(bar);
-            group.appendChild(wrapper);
-        });
-
-        const nome = document.createElement("div");
-        nome.className = "group-name";
-        nome.innerText = faixa;
-        group.appendChild(nome);
-
-        grafico.appendChild(group);
-    });
-}
-
-function montarIndicadores() {
-    const b = indicadores.backlog;
-    document.getElementById("backlogRecuperado").innerText = numero(b.recuperado);
-    document.getElementById("backlogTotal").innerText = numero(b.total);
-    document.getElementById("backlogPercentual").innerText = percentualDecimal(b.recuperado, b.total);
-
-    const f = indicadores.faixa30;
-    document.getElementById("faixa30Recuperado").innerText = numero(f.recuperado);
-    document.getElementById("faixa30Total").innerText = numero(f.total);
-    document.getElementById("faixa30Percentual").innerText = percentualDecimal(f.recuperado, f.total);
-}
-
-/* =====================================================
-   FILTRO AUTOMÁTICO E EXIBIÇÃO DE FOTOS
-   ===================================================== */
 function montarAniversariantes() {
     const grid = document.getElementById("gridAniversariantes");
     grid.innerHTML = "";
@@ -580,15 +665,10 @@ function montarAniversariantes() {
     const doMes = listaAniversariantes.filter(p => {
         if (!p.dia || !p.dia.includes("/")) return false;
         const partes = p.dia.split("/");
-        const mesPessoa = partes[1].padStart(2, "0");
-        return mesPessoa === mesAtualString;
+        return partes[1].padStart(2, "0") === mesAtualString;
     });
 
-    doMes.sort((a, b) => {
-        const diaA = parseInt(a.dia.split("/")[0], 10);
-        const diaB = parseInt(b.dia.split("/")[0], 10);
-        return diaA - diaB;
-    });
+    doMes.sort((a, b) => parseInt(a.dia.split("/")[0], 10) - parseInt(b.dia.split("/")[0], 10));
 
     const card = document.createElement("div");
     card.className = "card-mes";
@@ -610,7 +690,7 @@ function montarAniversariantes() {
     card.innerHTML = `
         <div class="card-mes-topo">${mesNome}</div>
         <div class="card-mes-corpo">
-            ${htmlItens || "<p style='text-align:center;color:#888;margin-top:20px;'>Nenhum aniversariante neste mês.</p>"}
+            ${htmlItens || "<p style='text-align:center;color:var(--cinza-texto);padding:20px;'>Nenhum aniversariante neste mês.</p>"}
         </div>
     `;
 
@@ -625,34 +705,14 @@ function telaCheia() {
     }
 }
 
-function atualizarTudo() {
+function init() {
     atualizarData();
-    montarTabela();
-    montarGrafico();
-    montarIndicadores();
+    renderizarTela1();
     montarAniversariantes();
     document.getElementById("ultimaAtualizacao").innerText = new Date().toLocaleTimeString("pt-BR");
 }
 
-/* =====================================================
-   PARÂMETROS DE URL
-   ===================================================== */
-const params = new URLSearchParams(window.location.search);
-
-if (params.has("m60")) dados["60 dias"].meta = Number(params.get("m60"));
-if (params.has("r60")) dados["60 dias"].realizado = Number(params.get("r60"));
-if (params.has("p60")) dados["60 dias"].projecao = Number(params.get("p60"));
-
-if (params.has("m90")) dados["90 dias"].meta = Number(params.get("m90"));
-if (params.has("r90")) dados["90 dias"].realizado = Number(params.get("r90"));
-if (params.has("p90")) dados["90 dias"].projecao = Number(params.get("p90"));
-
-if (params.has("m120")) dados["120 dias"].meta = Number(params.get("m120"));
-if (params.has("r120")) dados["120 dias"].realizado = Number(params.get("r120"));
-if (params.has("p120")) dados["120 dias"].projecao = Number(params.get("p120"));
-
-atualizarTudo();
-setInterval(atualizarTudo, 5 * 60 * 1000);
+init();
 
 </script>
 
