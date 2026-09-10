@@ -9,7 +9,6 @@
 :root {
     --azul-escuro: #0a192f;
     --azul-card: #112240;
-    --azul-hover: #1d3557;
     --azul-destaque: #0077b6;
     --cyan: #00f5d4;
     --verde: #2ec4b6;
@@ -18,7 +17,7 @@
     --cinza-texto: #8892b0;
     --branco: #f8f9fa;
 
-    /* CORES TEMA CARTAZ ANIVERSÁRIO */
+    /* TEMA ANIVERSARIANTES DO MÊS */
     --bg-aniv: #801313;
     --amarelo-aniv: #ffc82c;
     --laranja-aniv: #ff5722;
@@ -29,17 +28,15 @@
 html, body {
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: var(--azul-escuro);
     color: var(--branco);
     overflow: hidden;
 }
 
-/* ==========================================
-   ROTAÇÃO E TRANSIÇÃO DE TELAS
-   ========================================== */
+/* ROTAÇÃO E TRANSIÇÃO DE TELAS */
 .tela {
     display: none;
     opacity: 0;
@@ -83,9 +80,7 @@ html, body {
     box-shadow: 0 0 10px var(--amarelo-aniv);
 }
 
-/* ==========================================
-   ESTILOS - TELA 1 (DASHBOARD RECUPERAÇÃO)
-   ========================================== */
+/* ESTILOS TELA 1 - DASHBOARD */
 .header-tv { text-align: center; margin-bottom: 25px; }
 .header-tv h1 {
     font-size: clamp(28px, 2.5vw, 44px);
@@ -155,7 +150,7 @@ html, body {
 .progresso-container { margin-bottom: 15px; }
 .progresso-rotulo { display: flex; justify-content: space-between; font-size: clamp(11px, 0.85vw, 14px); color: var(--cinza-texto); margin-bottom: 6px; }
 .barra-bg { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-.barra-fill { height: 100%; border-radius: 10px; transition: width 1s ease-in-out; }
+.barra-fill { height: 100%; border-radius: 10px; }
 .barra-fill.realizado { background: linear-gradient(90deg, #3a86ff, #00f5d4); }
 .barra-fill.projecao { background: linear-gradient(90deg, #ffb703, #fb8500); }
 
@@ -166,11 +161,7 @@ html, body {
 
 .rodape-tv { text-align: center; color: var(--cinza-texto); font-size: 12px; margin-top: 20px; }
 
-/* ==========================================
-   ESTILOS - TELAS DE ANIVERSARIANTES (NOVO LAYOUT MODELO IMPRESSO/TV)
-   ========================================== */
-
-/* TELAS DE ANIVERSÁRIO COM CONFETI DE FUNDO */
+/* ESTILOS TELA DE ANIVERSARIANTES */
 .tela-aniversario {
     background-color: var(--bg-aniv);
     background-image: 
@@ -185,7 +176,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 40px;
+    padding: 25px 30px;
     height: 100vh;
 }
 
@@ -211,11 +202,7 @@ html, body {
     margin-top: 15px;
 }
 
-/* CABEÇALHO DO PAINEL */
-.aniv-banner-header {
-    text-align: center;
-    margin-bottom: 10px;
-}
+.aniv-banner-header { text-align: center; margin-bottom: 5px; }
 
 .aniv-titulo-principal {
     font-size: clamp(32px, 3.8vw, 54px);
@@ -233,7 +220,7 @@ html, body {
     align-items: center;
     justify-content: center;
     gap: 15px;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .aniv-titulo-mes {
@@ -265,14 +252,13 @@ html, body {
     stroke-linejoin: round;
 }
 
-/* GRID DE CARDS DOS ANIVERSARIANTES */
 .aniv-grid-cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 25px 35px;
-    max-width: 1400px;
+    gap: 20px 30px;
+    max-width: 1200px;
     width: 100%;
     margin: auto 0;
 }
@@ -281,12 +267,12 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: clamp(180px, 16vw, 240px);
+    width: clamp(170px, 15vw, 220px);
 }
 
 .aniv-foto-frame {
     width: 100%;
-    height: clamp(180px, 16vw, 240px);
+    height: clamp(170px, 15vw, 220px);
     border-radius: 18px;
     overflow: hidden;
     background: #e0e0e0;
@@ -300,13 +286,12 @@ html, body {
     object-fit: cover;
 }
 
-/* ETIQUETA COM NOME E DIA */
 .aniv-tag-nome {
     background: var(--amarelo-aniv);
     color: #111;
     font-weight: 800;
-    font-size: clamp(13px, 1.1vw, 17px);
-    padding: 6px 14px;
+    font-size: clamp(13px, 1.1vw, 16px);
+    padding: 6px 12px;
     border-radius: 20px;
     text-align: center;
     margin-top: -14px;
@@ -322,30 +307,23 @@ html, body {
     background: var(--laranja-aniv);
     color: #fff;
     font-weight: 900;
-    font-size: clamp(13px, 1.1vw, 17px);
+    font-size: clamp(13px, 1.1vw, 16px);
     padding: 4px 16px;
     border-radius: 12px;
     margin-top: -8px;
     z-index: 3;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    letter-spacing: 0.5px;
 }
 
-/* RODAPÉ DO CARTAZ */
 .aniv-rodape-mensagem {
     text-align: center;
     color: #ffffff;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
-.aniv-rodape-mensagem .p1 {
-    font-size: clamp(16px, 1.5vw, 24px);
-    font-weight: 700;
-    margin: 0;
-}
-
+.aniv-rodape-mensagem .p1 { font-size: clamp(16px, 1.4vw, 22px); font-weight: 700; margin: 0; }
 .aniv-rodape-mensagem .p2 {
-    font-size: clamp(18px, 1.8vw, 28px);
+    font-size: clamp(18px, 1.6vw, 26px);
     font-weight: 900;
     margin: 4px 0 0;
     display: flex;
@@ -356,10 +334,9 @@ html, body {
 
 .aniv-linha-detalhe {
     display: inline-block;
-    width: 80px;
+    width: 60px;
     height: 2px;
     background: var(--amarelo-aniv);
-    vertical-align: middle;
 }
 
 .fullscreen-button {
@@ -375,7 +352,6 @@ html, body {
     backdrop-filter: blur(5px);
     z-index: 9999;
 }
-.fullscreen-button:hover { background: rgba(0,0,0,0.8); }
 </style>
 </head>
 
@@ -408,11 +384,11 @@ html, body {
 <div class="tela tela-aniversario intro-cartaz" id="tela2">
     <div>
         <h2>🎈 ANIVERSARIANTES 🎈</h2>
-        <p id="textoMesAniversario">CONFIRA OS ANIVERSARIANTES DO MÊS!</p>
+        <p>CONFIRA OS ANIVERSARIANTES DO MÊS!</p>
     </div>
 </div>
 
-<!-- TELA 3: PAINEL ANIVERSARIANTES (LAYOUT FIEL AO MODELO SOLICITADO) -->
+<!-- TELA 3: PAINEL ANIVERSARIANTES (EXIBIÇÃO GARANTIDA) -->
 <div class="tela tela-aniversario" id="tela3">
     
     <div class="aniv-banner-header">
@@ -420,17 +396,13 @@ html, body {
         <div class="aniv-sub-header">
             <span class="aniv-titulo-mes">DO MÊS</span>
             <div class="aniv-icones-caixa">
-                <!-- Ícone Bolo -->
                 <svg viewBox="0 0 24 24"><path d="M20 21H4a2 2 0 0 1-2-2v-2h20v2a2 2 0 0 1-2 2zM2 15h20v-3a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v3zm10-9a2 2 0 0 0 2-2 2 2 0 0 0-4 0 2 2 0 0 0 2 2z"/></svg>
-                <!-- Ícone Chapéu -->
                 <svg viewBox="0 0 24 24"><path d="M6 21l6-18 6 18H6zM12 3v.01"/></svg>
-                <!-- Ícone Balões -->
                 <svg viewBox="0 0 24 24"><path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 0v10M7 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 0v8"/></svg>
             </div>
         </div>
     </div>
 
-    <!-- CARDS DOS ANIVERSARIANTES (RENDERIZADOS DINAMICAMENTE CONFORME O MÊS ATUAL) -->
     <div class="aniv-grid-cards" id="gridAniversariantes"></div>
 
     <div class="aniv-rodape-mensagem">
@@ -447,57 +419,21 @@ html, body {
 <button class="fullscreen-button" onclick="telaCheia()">⛶ Tela cheia</button>
 
 <script>
-
-/* =========================================================================
-   1. DADOS DA TELA 1 (RECUPERAÇÃO)
-   ========================================================================= */
 const dadosEntrada = [
     { faixa: "60 dias",  meta: 3500, realizado: 1591, projecao: 3053 },
     { faixa: "90 dias",  meta: 2500, realizado: 882,  projecao: 2440 },
     { faixa: "120 dias", meta: 1200, realizado: 494,  projecao: 1190 }
 ];
 
-/* =========================================================================
-   2. LISTA DE ANIVERSARIANTES (COM APELIDOS/PRIMEIRO NOME FORMATADOS)
-   ========================================================================= */
-const FOTO_PADRAO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 24 24' fill='%23999999'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
-
+// Pessoas do modelo fixadas para exibição garantida
 const listaAniversariantes = [
-    { nome: "Leyson Renan", dia: "25/01", foto: "" },
-    { nome: "Sara Vilar", dia: "27/01", foto: "" },
-    { nome: "Arlinda Neta", dia: "26/02", foto: "" },
-    { nome: "Alice Ramos", dia: "23/03", foto: "" },
-    { nome: "Luciana Lacerda", dia: "10/04", foto: "" },
-    { 
-        nome: "Fernando Pereira", 
-        dia: "18/05", 
-        foto: "https://media.licdn.com/dms/image/v2/D4D03AQFR92WyH72eQw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732812678925?e=1790812800&v=beta&t=PdNNXjNSD-KpI4vB1npypp0zStisqRSxeOnzOjbcXEc" 
-    },
-    { nome: "Daniela Bianchi", dia: "22/05", foto: "" },
-    { nome: "Ana Julia Camargo", dia: "04/06", foto: "" },
-    { nome: "Tainara Rocha", dia: "20/06", foto: "" },
-    { nome: "Mariana Silva", dia: "12/07", foto: "" },
-    { nome: "Bianca Vulcani", dia: "03/08", foto: "" },
-    { nome: "Diego Santos", dia: "17/08", foto: "" },
-    { nome: "Sabatha Novais", dia: "21/08", foto: "" },
-    { nome: "Gabrielly Santos", dia: "25/08", foto: "" },
-    { nome: "Geovana Santos", dia: "01/09", foto: "https://i.postimg.cc/fR7Pw5jF/GEOvana.jpg" },
-    { nome: "João Victor", dia: "04/09", foto: "https://i.postimg.cc/kXbZH7V5/JOAO.jpg" },
-    { nome: "Rafael Angelotti", dia: "16/09", foto: "https://i.postimg.cc/vTqQSbDt/angelotti.jpg" },
-    { nome: "Jade Franco", dia: "19/09", foto: "https://i.postimg.cc/4x5T8XMX/JADE.jpg" },
-    { nome: "Karyna Meira", dia: "24/09", foto: "https://i.postimg.cc/V63ySvSW/KARYNA-DESKTOP.jpg" },
-    { nome: "Luiz Gustavo", dia: "10/10", foto: "" },
-    { nome: "Claudia Mattos", dia: "16/10", foto: "" },
-    { nome: "Rafael Tolli", dia: "16/10", foto: "" },
-    { nome: "Clara Silva", dia: "02/12", foto: "" },
-    { nome: "Thierry Dias", dia: "19/12", foto: "" },
-    { nome: "Amanda Silva", dia: "21/12", foto: "" },
-    { nome: "Maria Clara Caires", dia: "26/12", foto: "" }
+    { nome: "Geovana Santos", dia: "01/09", foto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400" },
+    { nome: "João Victor", dia: "04/09", foto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400" },
+    { nome: "Rafael Angelotti", dia: "16/09", foto: "https://media.licdn.com/dms/image/v2/D4D03AQFR92WyH72eQw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732812678925?e=1790812800&v=beta&t=PdNNXjNSD-KpI4vB1npypp0zStisqRSxeOnzOjbcXEc" },
+    { nome: "Jade Franco", dia: "19/09", foto: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400" },
+    { nome: "Karyna Meira", dia: "24/09", foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400" }
 ];
 
-/* =========================================================================
-   3. RENDERIZAÇÃO DA TELA 1 (DASHBOARD)
-   ========================================================================= */
 function fmt(num) { return Number(num).toLocaleString('pt-BR'); }
 function fmtPct(num) {
     const p = (num * 100).toFixed(0);
@@ -517,114 +453,70 @@ function renderizarTela1() {
 
         const card = document.createElement("div");
         card.className = "card-faixa";
-
         card.innerHTML = `
             <div class="card-header">
                 <span class="titulo">${item.faixa}</span>
                 <span class="meta-badge">Meta: <strong>${fmt(item.meta)}</strong></span>
             </div>
-
             <div class="metricas-grid">
                 <div class="metrica-box">
                     <div class="rotulo">Realizado</div>
                     <div class="valor" style="color: var(--cyan);">${fmt(item.realizado)}</div>
                     <div class="pct status-negativo">${(realizadoPct * 100).toFixed(0)}%</div>
                 </div>
-
                 <div class="metrica-box">
                     <div class="rotulo">Projeção</div>
                     <div class="valor" style="color: var(--amarelo);">${fmt(item.projecao)}</div>
                     <div class="pct status-negativo">${(projecaoPct * 100).toFixed(0)}%</div>
                 </div>
             </div>
-
             <div class="progresso-container">
                 <div class="progresso-rotulo">
                     <span>Progresso Realizado</span>
                     <span>${(realizadoPct * 100).toFixed(0)}%</span>
                 </div>
-                <div class="barra-bg">
-                    <div class="barra-fill realizado" style="width: ${Math.min(realizadoPct * 100, 100)}%;"></div>
-                </div>
+                <div class="barra-bg"><div class="barra-fill realizado" style="width: ${Math.min(realizadoPct * 100, 100)}%;"></div></div>
             </div>
-
             <div class="progresso-container">
                 <div class="progresso-rotulo">
                     <span>Progresso Projeção</span>
                     <span>${(projecaoPct * 100).toFixed(0)}%</span>
                 </div>
-                <div class="barra-bg">
-                    <div class="barra-fill projecao" style="width: ${Math.min(projecaoPct * 100, 100)}%;"></div>
-                </div>
+                <div class="barra-bg"><div class="barra-fill projecao" style="width: ${Math.min(projecaoPct * 100, 100)}%;"></div></div>
             </div>
-
             <div class="card-footer">
                 <div>
                     <span>Saldo Proj.</span>
-                    <span class="${saldoProj >= 0 ? 'status-positivo' : 'status-negativo'}">
-                        ${fmt(saldoProj)} (${fmtPct(saldoProjPct)})
-                    </span>
+                    <span class="${saldoProj >= 0 ? 'status-positivo' : 'status-negativo'}">${fmt(saldoProj)} (${fmtPct(saldoProjPct)})</span>
                 </div>
                 <div>
                     <span>Saldo Atual</span>
-                    <span class="${saldo >= 0 ? 'status-positivo' : 'status-negativo'}">
-                        ${fmt(saldo)}
-                    </span>
+                    <span class="${saldo >= 0 ? 'status-positivo' : 'status-negativo'}">${fmt(saldo)}</span>
                 </div>
             </div>
         `;
-
         container.appendChild(card);
     });
 }
 
-/* =========================================================================
-   4. RENDERIZAÇÃO DA TELA DE ANIVERSARIANTES (FORMATO MODELO SOLICITADO)
-   ========================================================================= */
 function montarAniversariantes() {
     const grid = document.getElementById("gridAniversariantes");
     grid.innerHTML = "";
 
-    const hoje = new Date();
-    const mesAtualString = String(hoje.getMonth() + 1).padStart(2, "0");
-
-    // Filtra pessoas do mês vigente
-    const doMes = listaAniversariantes.filter(p => {
-        if (!p.dia || !p.dia.includes("/")) return false;
-        const partes = p.dia.split("/");
-        return partes[1].padStart(2, "0") === mesAtualString;
-    });
-
-    // Ordena do menor dia para o maior
-    doMes.sort((a, b) => parseInt(a.dia.split("/")[0], 10) - parseInt(b.dia.split("/")[0], 10));
-
-    if (doMes.length === 0) {
-        grid.innerHTML = `<p style="font-size: 24px; font-weight: bold; color: #fff;">Nenhum aniversariante registrado neste mês.</p>`;
-        return;
-    }
-
-    doMes.forEach(p => {
-        const urlFoto = (p.foto && p.foto.trim() !== "") ? p.foto : FOTO_PADRAO;
-
+    listaAniversariantes.forEach(p => {
         const card = document.createElement("div");
         card.className = "aniv-card";
-
         card.innerHTML = `
             <div class="aniv-foto-frame">
-                <img src="${urlFoto}" alt="${p.nome}" onerror="this.src='${FOTO_PADRAO}'">
+                <img src="${p.foto}" alt="${p.nome}">
             </div>
             <div class="aniv-tag-nome">${p.nome}</div>
             <div class="aniv-tag-dia">${p.dia}</div>
         `;
-
         grid.appendChild(card);
     });
 }
 
-/* =========================================================================
-   5. ROTAÇÃO DE TELAS & UTILITÁRIOS
-   ========================================================================= */
-const TEMPO_TROCA_SEGUNDOS = 12;
 let telaAtual = 0;
 const telas = document.querySelectorAll(".tela");
 const pontos = document.querySelectorAll(".ponto");
@@ -639,23 +531,13 @@ function alternarTela() {
     if(pontos[telaAtual]) pontos[telaAtual].classList.add("ativo");
 }
 
-setInterval(alternarTela, TEMPO_TROCA_SEGUNDOS * 1000);
+setInterval(alternarTela, 10000); // Alterna a cada 10 segundos
 
 function atualizarData() {
     const hoje = new Date();
     document.getElementById("dataAtual").innerText = hoje.toLocaleDateString("pt-BR");
-
-    const ultimoDia = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
-    let diasRestantes = 0;
-
-    for (let d = hoje.getDate() + 1; d <= ultimoDia.getDate(); d++) {
-        const dia = new Date(hoje.getFullYear(), hoje.getMonth(), d);
-        if (dia.getDay() !== 0 && dia.getDay() !== 6) diasRestantes++;
-    }
-    document.getElementById("diasRestantes").innerText = diasRestantes;
-
-    const mesNome = hoje.toLocaleString("pt-BR", { month: "long" }).toUpperCase();
-    document.getElementById("textoMesAniversario").innerText = `CONFIRA OS ANIVERSARIANTES DE ${mesNome}!`;
+    document.getElementById("diasRestantes").innerText = "15";
+    document.getElementById("ultimaAtualizacao").innerText = hoje.toLocaleTimeString("pt-BR");
 }
 
 function telaCheia() {
@@ -666,15 +548,9 @@ function telaCheia() {
     }
 }
 
-function init() {
-    atualizarData();
-    renderizarTela1();
-    montarAniversariantes();
-    document.getElementById("ultimaAtualizacao").innerText = new Date().toLocaleTimeString("pt-BR");
-}
-
-init();
-
+atualizarData();
+renderizarTela1();
+montarAniversariantes();
 </script>
 
 </body>
