@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TAGS ANTI-CACHE PARA GARANTIR QUE A TV PEGUE OS DADOS NOVOS -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
 <title>Acompanhamento e Aniversariantes - TV</title>
 
 <style>
@@ -435,7 +441,6 @@ html, body {
     white-space: pre-line;
 }
 
-/* DENSIDADE AUMENTADA: Dimensões ajustadas para maximizar o uso da tela */
 .img-brinde-midia {
     width: 100%;
     max-width: 96vw;
@@ -710,7 +715,7 @@ function renderizarTela1() {
 /* =========================================================================
    5. ROTAÇÃO DE TELAS & UTILITÁRIOS
    ========================================================================= */
-const TEMPO_TROCA_SEGUNDOS = 30;
+const TEMPO_TROCA_SEGUNDOS = 20;
 let telaAtual = 0;
 let telas = [];
 let pontos = [];
@@ -810,6 +815,13 @@ function telaCheia() {
         document.exitFullscreen();
     }
 }
+
+/* =========================================================================
+   6. AUTO-RELOAD DA TELA A CADA 1 HORA (3.600.000 ms)
+   ========================================================================= */
+setInterval(() => {
+    window.location.reload(true);
+}, 60 * 60 * 1000);
 
 function init() {
     atualizarData();
