@@ -38,6 +38,29 @@ html, body {
     overflow: hidden;
 }
 
+/* LOGO FIXA NO RODAPÉ EM TODAS AS TELAS */
+.logo-empresa-fixa {
+    position: fixed;
+    bottom: 20px;
+    left: 25px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.logo-empresa-fixa img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
 /* ==========================================
    ROTAÇÃO E TRANSIÇÃO DE TELAS
    ========================================== */
@@ -470,6 +493,11 @@ html, body {
 
 <body>
 
+<!-- LOGO DESKTOP FIXA NO RODAPÉ EM TODAS AS TELAS -->
+<div class="logo-empresa-fixa">
+    <img src="https://i.postimg.cc/tRKkGH66/logo-desktop.jpg" alt="Desktop Logo">
+</div>
+
 <div class="indicador-telas" id="indicadorTelas"></div>
 
 <div id="containerTelas">
@@ -550,7 +578,7 @@ const imagensBrindes = [
         "src": "https://i.postimg.cc/QxgqtZmG/aniversariantes-do-mes.png"
     },
     {
-        "titulo": "VENCE A MAIOR RECUPERAÇÃO MÉDIA POR DIA ÚTIL (MÍNIMO DE 90% DA META COLETIVA). FOLGA: CALCULADA NO MÊS SEGUINTE AO FECHAMENTO (EX.: FECHA EM SET/FOLGA EM OUT).",
+        "titulo": "PREMIAÇÃO MENSAL 90% A 99%",
         "src": "https://i.postimg.cc/8c4s24RK/Premiacao-Mensal-90-a-99.png"
     },
     {
