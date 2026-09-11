@@ -846,12 +846,25 @@ function renderizarTela1() {
 }
 
 /* =========================================================================
-   5. ROTAÇÃO DE TELAS & UTILITÁRIOS
+   5. CONTROLE INDIVIDUAL DE TEMPO POR TELA & ROTAÇÃO INTELIGENTE
    ========================================================================= */
-const TEMPO_TROCA_SEGUNDOS = 20;
+const TEMPO_PADRAO = 20; // Tempo padrão (segundos) caso a tela não esteja listada abaixo
+
+const temposTelas = {
+    "tela1": 25,           // Tela 1 (Recuperação): fica 25 segundos
+    "tela2": 10,           // Tela 2 (Intro Aniversariantes): fica 10 segundos
+    "tela3": 20,           // Tela 3 (Lista Aniversariantes): fica 20 segundos
+    "telaBrinde_0": 15,    // 1ª imagem de brinde
+    "telaBrinde_1": 30,    // 2ª imagem de brinde (regra longa, fica 30 segundos)
+    "telaBrinde_2": 20,    // 3ª imagem de brinde
+    "telaBrinde_3": 20,    // 4ª imagem de brinde
+    "telaBrinde_4": 20     // 5ª imagem de brinde
+};
+
 let telaAtual = 0;
 let telas = [];
 let pontos = [];
+let temporizadorTimeout = null;
 
 function criarIndicadores() {
     telas = document.querySelectorAll(".tela");
@@ -870,16 +883,25 @@ function criarIndicadores() {
 function alternarTela() {
     if (telas.length === 0) return;
 
+    // Remove a classe ativa da tela atual
     telas[telaAtual].classList.remove("ativa");
     if (pontos[telaAtual]) pontos[telaAtual].classList.remove("ativo");
 
+    // Avança para a próxima tela de forma circular
     telaAtual = (telaAtual + 1) % telas.length;
 
-    telas[telaAtual].classList.add("ativa");
+    // Ativa a nova tela
+    const telaAtualObj = telas[telaAtual];
+    telaAtualObj.classList.add("ativa");
     if (pontos[telaAtual]) pontos[telaAtual].classList.add("ativo");
-}
 
-setInterval(alternarTela, TEMPO_TROCA_SEGUNDOS * 1000);
+    // Descobre o tempo específico desta tela ou usa o padrão
+    const idTela = telaAtualObj.id;
+    const tempoSegundos = temposTelas[idTela] || TEMPO_PADRAO;
+
+    // Agenda a próxima troca baseada no tempo desta tela específica
+    temporizadorTimeout = setTimeout(alternarTela, tempoSegundos * 1000);
+}
 
 function atualizarData() {
     const hoje = new Date();
@@ -963,6 +985,12 @@ function init() {
     gerarTelasImagens();
     criarIndicadores();
     document.getElementById("ultimaAtualizacao").innerText = new Date().toLocaleTimeString("pt-BR");
+
+    // Inicia a rotação inteligente pegando o tempo específico da primeira tela
+    if (telas.length > 0) {
+        const primeiroTempo = temposTelas[telas[0].id] || TEMPO_PADRAO;
+        temporizadorTimeout = setTimeout(alternarTela, primeiroTempo * 1000);
+    }
 }
 
 init();
