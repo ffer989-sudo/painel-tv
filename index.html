@@ -58,7 +58,7 @@ html, body {
 .logo-icon-svg {
     width: 30px;
     height: 24px;
-    fill: #FFB800; /* Amarelo/Laranja Desktop */
+    fill: #FFB800;
 }
 
 .logo-texto {
@@ -71,13 +71,8 @@ html, body {
     align-items: center;
 }
 
-.logo-texto .parte-vermelha {
-    color: #E30613; /* Vermelho Desktop */
-}
-
-.logo-texto .parte-amarela {
-    color: #FFB800; /* Amarelo Desktop */
-}
+.logo-texto .parte-vermelha { color: #E30613; }
+.logo-texto .parte-amarela { color: #FFB800; }
 
 /* ==========================================
    ROTAÇÃO E TRANSIÇÃO DE TELAS
@@ -280,7 +275,8 @@ html, body {
 }
 
 .barra-fill.realizado { background: linear-gradient(90deg, #3a86ff, #00f5d4); }
-.barra-fill.projecao { background: linear-gradient(90deg, #ffb703, #fb8500); }
+.barra-fill.projecao-amarela { background: linear-gradient(90deg, #ffb703, #fb8500); }
+.barra-fill.projecao-verde { background: linear-gradient(90deg, #2a9d8f, #2ec4b6); }
 
 .card-footer {
     display: grid;
@@ -707,6 +703,11 @@ function renderizarTela1() {
         const saldoProjPct = saldoProj / item.meta;
         const saldo = item.realizado - item.meta;
 
+        // Verifica se atingiu 100% ou mais na projeção
+        const bateuMetaProj = projecaoPct >= 1;
+        const classeBarraProj = bateuMetaProj ? "projecao-verde" : "projecao-amarela";
+        const corTextoProj = bateuMetaProj ? "var(--verde)" : "var(--amarelo)";
+
         const card = document.createElement("div");
         card.className = "card-faixa";
 
@@ -725,8 +726,8 @@ function renderizarTela1() {
 
                 <div class="metrica-box">
                     <div class="rotulo">Projeção</div>
-                    <div class="valor" style="color: var(--amarelo);">${fmt(item.projecao)}</div>
-                    <div class="pct status-negativo">${(projecaoPct * 100).toFixed(0)}%</div>
+                    <div class="valor" style="color: ${corTextoProj};">${fmt(item.projecao)}</div>
+                    <div class="pct" style="color: ${corTextoProj};">${(projecaoPct * 100).toFixed(0)}%</div>
                 </div>
             </div>
 
@@ -743,10 +744,10 @@ function renderizarTela1() {
             <div class="progresso-container">
                 <div class="progresso-rotulo">
                     <span>Progresso Projeção</span>
-                    <span>${(projecaoPct * 100).toFixed(0)}%</span>
+                    <span style="color: ${corTextoProj}; font-weight: bold;">${(projecaoPct * 100).toFixed(0)}%</span>
                 </div>
                 <div class="barra-bg">
-                    <div class="barra-fill projecao" style="width: ${Math.min(projecaoPct * 100, 100)}%;"></div>
+                    <div class="barra-fill ${classeBarraProj}" style="width: ${Math.min(projecaoPct * 100, 100)}%;"></div>
                 </div>
             </div>
 
