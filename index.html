@@ -38,7 +38,7 @@ html, body {
     overflow: hidden;
 }
 
-/* LOGO FIXA NO RODAPÉ EM TODAS AS TELAS */
+/* LOGO FIXA EM HTML/CSS PURO NO RODAPÉ */
 .logo-empresa-fixa {
     position: fixed;
     bottom: 20px;
@@ -46,19 +46,37 @@ html, body {
     z-index: 9999;
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    padding: 6px 12px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    gap: 10px;
+    background: rgba(17, 34, 64, 0.7);
+    backdrop-filter: blur(12px);
+    padding: 8px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
-.logo-empresa-fixa img {
-    height: 36px;
-    width: auto;
-    object-fit: contain;
-    border-radius: 4px;
+.logo-icon-svg {
+    width: 30px;
+    height: 24px;
+    fill: #FFB800; /* Amarelo/Laranja Desktop */
+}
+
+.logo-texto {
+    font-family: 'Arial Black', Gadget, sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-texto .parte-vermelha {
+    color: #E30613; /* Vermelho Desktop */
+}
+
+.logo-texto .parte-amarela {
+    color: #FFB800; /* Amarelo Desktop */
 }
 
 /* ==========================================
@@ -493,9 +511,17 @@ html, body {
 
 <body>
 
-<!-- LOGO DESKTOP FIXA NO RODAPÉ EM TODAS AS TELAS -->
+<!-- LOGO DESKTOP EM HTML/CSS FIXA NO RODAPÉ -->
 <div class="logo-empresa-fixa">
-    <img src="https://i.postimg.cc/tRKkGH66/logo-desktop.jpg" alt="Desktop Logo">
+    <svg class="logo-icon-svg" viewBox="0 0 100 80">
+        <circle cx="20" cy="20" r="14" />
+        <circle cx="50" cy="20" r="14" />
+        <circle cx="80" cy="20" r="14" />
+        <path d="M 20 38 L 50 68 L 80 38 Z" />
+    </svg>
+    <div class="logo-texto">
+        <span class="parte-vermelha">DESK</span><span class="parte-amarela">TOP</span>
+    </div>
 </div>
 
 <div class="indicador-telas" id="indicadorTelas"></div>
