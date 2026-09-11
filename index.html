@@ -75,15 +75,19 @@ html, body {
 .logo-texto .parte-amarela { color: #FFB800; }
 
 /* ==========================================
-   ROTAÇÃO E TRANSIÇÃO DE TELAS
+   ROTAÇÃO E TRANSIÇÃO MODERNA (EFEITO ELEVADOR / ZOOM SUAVE)
    ========================================== */
 .tela {
     display: none;
     opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    padding: 20px;
+    transform: scale(0.97);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
+    padding: 20px;
 }
 
 .tela.ativa {
@@ -92,6 +96,8 @@ html, body {
     justify-content: center;
     align-items: center;
     opacity: 1;
+    transform: scale(1);
+    position: relative;
 }
 
 .indicador-telas {
@@ -462,9 +468,9 @@ html, body {
     padding: 15px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly; /* Distribui os itens perfeitamente sem scroll */
+    justify-content: space-evenly;
     flex-grow: 1;
-    overflow: hidden; /* Garante que nunca apareça barra de rolagem */
+    overflow: hidden;
 }
 
 .aniversariante-item {
