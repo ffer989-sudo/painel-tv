@@ -131,6 +131,12 @@ html, body {
     border-radius: 50%;
     background: rgba(255,255,255,0.2);
     transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.ponto:hover {
+    background: rgba(255,255,255,0.6);
+    transform: scale(1.2);
 }
 
 .ponto.ativo {
@@ -389,7 +395,6 @@ html, body {
     100% { transform: translateY(-1000px) rotate(20deg); opacity: 0; }
 }
 
-/* TELA 3 COM ADEQUAÇÃO AUTOMÁTICA (SEM SCROLL) */
 .aniversariantes-wrapper {
     display: flex;
     flex-direction: column;
@@ -557,11 +562,11 @@ html, body {
 }
 
 /* ==========================================
-    ESTILOS - TELA SETEMBRO AMARELO
+    ESTILOS - SETEMBRO AMARELO (90% Amarelo + Borda Azul da Paleta)
    ========================================== */
 .tela-amarelo {
-    background: radial-gradient(circle at center, rgba(234, 182, 34, 0.45) 0%, rgba(11, 22, 38, 1) 65%);
-    background-color: #0b1626;
+    background-color: #f7be00;
+    color: #111111;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -570,88 +575,98 @@ html, body {
     padding: 40px;
 }
 
-.amarelo-container {
-    max-width: 1200px;
+.amarelo-moldura-azul {
+    width: 92%;
+    height: 86%;
+    background-color: #f7be00;
+    border: 6px solid var(--azul-escuro);
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(10, 25, 47, 0.35), inset 0 0 20px rgba(0, 119, 182, 0.15);
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 25px;
+    padding: 40px;
+    position: relative;
 }
 
-.amarelo-logo-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: fadeInDown 1.2s ease-out;
-}
-
-.amarelo-logo-area h1 {
-    font-size: clamp(32px, 3.5vw, 56px);
-    color: #eab622;
-    font-weight: 800;
-    text-shadow: 0 4px 15px rgba(234, 182, 34, 0.3);
-    margin-bottom: 5px;
-    letter-spacing: 1px;
-}
-
-.amarelo-subtitle {
-    font-size: clamp(16px, 1.5vw, 24px);
-    color: #e0e0e0;
-    font-weight: 500;
-}
-
-.amarelo-card-mensagem {
-    background: rgba(15, 30, 52, 0.75);
-    border: 2px solid rgba(234, 182, 34, 0.3);
-    border-radius: 16px;
-    padding: 30px 50px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    max-width: 900px;
-    min-height: 180px;
+.amarelo-content-box {
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(5px);
+    gap: 50px;
+    max-width: 1300px;
+    width: 100%;
 }
 
-.amarelo-slideshow-text {
-    font-size: clamp(18px, 1.8vw, 28px);
-    line-height: 1.5;
-    color: #f5f5f5;
+.amarelo-texto-esq {
+    font-size: clamp(32px, 3.8vw, 62px);
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -1px;
+    text-align: right;
+}
+
+.amarelo-bloco-central {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fita de conscientização clássica com laço superior e pontas cruzadas */
+.fita-amarelo-svg {
+    width: clamp(80px, 8vw, 130px);
+    height: auto;
+    fill: #1a1a1a;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+}
+
+.amarelo-texto-dir {
+    font-size: clamp(32px, 3.8vw, 62px);
     font-weight: 400;
-    transition: opacity 0.5s ease-in-out;
+    color: #1a1a1a;
+    text-align: left;
+    line-height: 1.1;
 }
 
-.amarelo-footer {
-    margin-top: 10px;
-    font-size: clamp(16px, 1.5vw, 22px);
-    color: #eab622;
+.amarelo-texto-dir strong {
+    font-weight: 800;
+    display: block;
+}
+
+.amarelo-rodape-frase {
+    margin-top: 50px;
+    font-size: clamp(20px, 2vw, 30px);
     font-weight: 600;
+    color: #1a1a1a;
+    background: rgba(10, 25, 47, 0.08);
+    border: 2px solid rgba(10, 25, 47, 0.2);
+    padding: 15px 35px;
+    border-radius: 50px;
     letter-spacing: 0.5px;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .fade-out { opacity: 0; }
 .fade-in { opacity: 1; }
 
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
 .fullscreen-button {
     position: fixed;
     right: 20px;
     bottom: 20px;
-    background: rgba(255,255,255,0.1);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.2);
+    color: #111;
+    border: 1px solid rgba(0,0,0,0.2);
     padding: 10px 18px;
     border-radius: 10px;
     cursor: pointer;
     backdrop-filter: blur(5px);
     z-index: 9999;
+    font-weight: bold;
 }
-.fullscreen-button:hover { background: rgba(255,255,255,0.2); }
+.fullscreen-button:hover { background: rgba(0,0,0,0.3); }
 </style>
 </head>
 
@@ -722,21 +737,27 @@ html, body {
         </div>
     </div>
 
-    <!-- TELA FINAL: SETEMBRO AMARELO -->
+    <!-- TELA FINAL: SETEMBRO AMARELO (90% Amarelo + Borda Azul) -->
     <div class="tela tela-amarelo" id="telaSetembroAmarelo">
-        <div class="amarelo-container">
-            <div class="amarelo-logo-area">
-                <h1>💛 SETEMBRO AMARELO® 2026</h1>
-                <div class="amarelo-subtitle">Se precisar, peça ajuda!</div>
-            </div>
+        <div class="amarelo-moldura-azul">
+            <div class="amarelo-content-box">
+                <div class="amarelo-texto-esq">
+                    Setembro Amarelo.
+                </div>
 
-            <div class="amarelo-card-mensagem">
-                <div id="amarelo-text-box" class="amarelo-slideshow-text fade-in">
-                    O Setembro Amarelo® é uma campanha de conscientização e prevenção ao suicídio, promovida no Brasil pela ABP e CFM.
+                <div class="amarelo-bloco-central">
+                    <!-- Fita de Conscientização real (Laço superior + Pontas cruzadas) -->
+                    <svg class="fita-amarelo-svg" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 5 C30 5, 20 22, 30 42 C38 58, 48 65, 48 85 C48 95, 40 105, 30 115 L42 125 C48 115, 54 105, 54 90 C54 70, 44 58, 38 45 C30 30, 38 15, 50 15 C62 15, 70 30, 62 45 C56 58, 46 70, 46 90 C46 105, 52 115, 58 125 L70 115 C60 105, 52 95, 52 85 C52 65, 62 58, 70 42 C80 22, 70 5, 50 5 Z"/>
+                    </svg>
+                </div>
+
+                <div class="amarelo-texto-dir">
+                    Toda vida <strong>importa.</strong>
                 </div>
             </div>
 
-            <div class="amarelo-footer">
+            <div id="amarelo-footer-box" class="amarelo-rodape-frase fade-in">
                 💛 Falar é um passo. Pedir ajuda também.
             </div>
         </div>
@@ -797,8 +818,8 @@ const imagensBrindes = [
         "src": "https://i.postimg.cc/VvjhMst3/Fechamento-de-Ouro.jpg"
     },
     {
-        "titulo": "TABULAÇÃO ATUALIZADA ATÉ AS 09H33",
-        "src": "https://i.postimg.cc/7PnG2X98/Tabulacao-atualizada.png"
+        "titulo": "TABULAÇÃO ATUALIZADA ATÉ AS 08H24",
+        "src": "https://i.postimg.cc/GhB1TkXj/Tabulacao-atualizada.png"
     }
 ];
 
@@ -858,7 +879,6 @@ function gerarTelasImagens() {
                 <img src="${imgObj.src}" class="img-brinde-midia" alt="${imgObj.titulo || 'Imagem Brinde'}">
             </div>
         `;
-        // Insere as imagens de brindes antes da tela do Setembro Amarelo para garantir que ela seja sempre a última
         containerTelas.insertBefore(divTela, telaSetembroAmarelo);
     });
 }
@@ -954,22 +974,22 @@ function renderizarTela1() {
 }
 
 /* =========================================================================
-   5. CONTROLE INDIVIDUAL DE TEMPO POR TELA & ROTAÇÃO INTELIGENTE
+   5. CONTROLE DE TEMPO POR TELA E NAVEGAÇÃO MANUAL/AUTOMÁTICA
    ========================================================================= */
-const TEMPO_PADRAO = 20; // Tempo padrão (segundos) caso a tela não esteja listada abaixo
+const TEMPO_PADRAO = 20;
 
 const temposTelas = {
-    "tela1": 40,              // Tela 1 (Recuperação): fica 40 segundos
-    "tela2": 05,              // Tela 2 (Intro Aniversariantes): fica 5 segundos
-    "tela3": 20,              // Tela 3 (Lista Aniversariantes): fica 20 segundos
-    "telaSetembroAmarelo": 25,// Tela Setembro Amarelo: fica 25 segundos
-    "telaBrinde_0": 10,       // 1ª imagem de brinde
-    "telaBrinde_1": 40,       // 2ª imagem de brinde
-    "telaBrinde_2": 20,       // 3ª imagem de brinde
-    "telaBrinde_3": 20,       // 4ª imagem de brinde
-    "telaBrinde_4": 20,       // 5ª imagem de brinde
-    "telaBrinde_5": 20,       // 6ª imagem de brinde
-    "telaBrinde_6": 20        // 7ª imagem de brinde
+    "tela1": 40,
+    "tela2": 05,
+    "tela3": 20,
+    "telaSetembroAmarelo": 25,
+    "telaBrinde_0": 10,
+    "telaBrinde_1": 40,
+    "telaBrinde_2": 20,
+    "telaBrinde_3": 20,
+    "telaBrinde_4": 20,
+    "telaBrinde_5": 20,
+    "telaBrinde_6": 20
 };
 
 let telaAtual = 0;
@@ -985,33 +1005,43 @@ function criarIndicadores() {
     telas.forEach((_, i) => {
         const ponto = document.createElement("div");
         ponto.className = `ponto ${i === 0 ? 'ativo' : ''}`;
+        
+        ponto.addEventListener("click", () => {
+            irParaTela(i);
+        });
+
         containerIndicadores.appendChild(ponto);
     });
 
     pontos = document.querySelectorAll(".ponto");
 }
 
-function alternarTela() {
+function irParaTela(novoIndice) {
     if (telas.length === 0) return;
 
-    // Remove a classe ativa da tela atual
+    if (temporizadorTimeout) clearTimeout(temporizadorTimeout);
+
     telas[telaAtual].classList.remove("ativa");
     if (pontos[telaAtual]) pontos[telaAtual].classList.remove("ativo");
 
-    // Avança para a próxima tela de forma circular
-    telaAtual = (telaAtual + 1) % telas.length;
+    telaAtual = novoIndice;
 
-    // Ativa a nova tela
-    const telaAtualObj = telas[telaAtual];
-    telaAtualObj.classList.add("ativa");
+    telas[telaAtual].classList.add("ativa");
     if (pontos[telaAtual]) pontos[telaAtual].classList.add("ativo");
 
-    // Descobre o tempo específico desta tela ou usa o padrão
-    const idTela = telaAtualObj.id;
+    programarProximaTroca();
+}
+
+function programarProximaTroca() {
+    if (temporizadorTimeout) clearTimeout(temporizadorTimeout);
+
+    const idTela = telas[telaAtual].id;
     const tempoSegundos = temposTelas[idTela] || TEMPO_PADRAO;
 
-    // Agenda a próxima troca baseada no tempo desta tela específica
-    temporizadorTimeout = setTimeout(alternarTela, tempoSegundos * 1000);
+    temporizadorTimeout = setTimeout(() => {
+        let proxima = (telaAtual + 1) % telas.length;
+        irParaTela(proxima);
+    }, tempoSegundos * 1000);
 }
 
 function atualizarData() {
@@ -1083,33 +1113,33 @@ function telaCheia() {
 }
 
 /* =========================================================================
-   6. SLIDESHOW DAS MENSAGENS DO SETEMBRO AMARELO
+   6. SLIDESHOW DAS MENSAGENS DO RODAPÉ (SETEMBRO AMARELO)
    ========================================================================= */
-const mensagensAmarelo = [
-    "O Setembro Amarelo® é uma campanha de conscientização e prevenção ao suicídio, promovida no Brasil pela ABP e CFM.",
-    "Falar sobre saúde mental é importante.",
-    "Ouça sem julgamentos, demonstre empatia e incentive a busca por ajuda profissional.",
-    "Você não precisa enfrentar um momento difícil sozinho."
+const frasesAmarelo = [
+    "💛 Falar é um passo. Pedir ajuda também.",
+    "🗣️ Converse, compartilhe e apoie quem estiver por perto.",
+    "🤝 Você não está sozinho. Procure ajuda profissional.",
+    "📞 Centro de Valorização da Vida (CVV): Ligue 188."
 ];
 
-let indexAmarelo = 0;
-const amareloTextBox = document.getElementById("amarelo-text-box");
+let indexFrase = 0;
+const footerBox = document.getElementById("amarelo-footer-box");
 
-function trocarMensagemAmarelo() {
-    if (!amareloTextBox) return;
-    amareloTextBox.classList.remove("fade-in");
-    amareloTextBox.classList.add("fade-out");
+function trocarFraseAmarelo() {
+    if (!footerBox) return;
+    footerBox.classList.remove("fade-in");
+    footerBox.classList.add("fade-out");
 
     setTimeout(() => {
-        indexAmarelo = (indexAmarelo + 1) % mensagensAmarelo.length;
-        amareloTextBox.innerText = mensagensAmarelo[indexAmarelo];
+        indexFrase = (indexFrase + 1) % frasesAmarelo.length;
+        footerBox.innerText = frasesAmarelo[indexFrase];
         
-        amareloTextBox.classList.remove("fade-out");
-        amareloTextBox.classList.add("fade-in");
+        footerBox.classList.remove("fade-out");
+        footerBox.classList.add("fade-in");
     }, 500);
 }
 
-setInterval(trocarMensagemAmarelo, 6000);
+setInterval(trocarFraseAmarelo, 6000);
 
 /* =========================================================================
    7. AUTO-RELOAD DA TELA A CADA 1 HORA
@@ -1126,10 +1156,8 @@ function init() {
     criarIndicadores();
     document.getElementById("ultimaAtualizacao").innerText = new Date().toLocaleTimeString("pt-BR");
 
-    // Inicia a rotação inteligente pegando o tempo específico da primeira tela
     if (telas.length > 0) {
-        const primeiroTempo = temposTelas[telas[0].id] || TEMPO_PADRAO;
-        temporizadorTimeout = setTimeout(alternarTela, primeiroTempo * 1000);
+        programarProximaTroca();
     }
 }
 
