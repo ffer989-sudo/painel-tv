@@ -1532,6 +1532,30 @@ function init() {
 
 init();
 
+/* =========================================================================
+   10. ATIVAÇÃO AUTOMÁTICA DE TELA CHEIA
+   ========================================================================= */
+function ativarTelaCheiaAutomatico() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+            // Os navegadores bloqueiam o pedido automático de fullscreen se não houver 
+            // uma interação prévia do utilizador (clique). 
+            console.log("Fullscreen automático aguardando interação.");
+        });
+    }
+}
+
+// Tenta ativar assim que a página carregar
+window.addEventListener('load', () => {
+    ativarTelaCheiaAutomatico();
+});
+
+// Garante que caso o navegador bloqueie o carregamento automático, 
+// o primeiro clique/toque na tela coloque em fullscreen imediatamente
+document.addEventListener('click', () => {
+    ativarTelaCheiaAutomatico();
+}, { once: true });
+
 </script>
 
 </body>
