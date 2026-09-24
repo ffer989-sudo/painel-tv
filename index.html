@@ -1511,6 +1511,7 @@ function telaCheia() {
    9. AUTO-RELOAD DA TELA A CADA 1 HORA
    ========================================================================= */
 setInterval(() => {
+    localStorage.setItem("veioDeRefresh", "sim");
     window.location.reload(true);
 }, 60 * 60 * 1000);
 
@@ -1533,7 +1534,7 @@ function init() {
 init();
 
 /* =========================================================================
-   10. ATIVAÇÃO E MONITORIZAÇÃO CONTÍNUA DE TELA CHEIA
+   10. ATIVAÇÃO E MONITORIZAÇÃO CONTÍNUA DE TELA CHEIA (COM SUPORTE A REFRESH)
    ========================================================================= */
 function ativarTelaCheia() {
     if (!document.fullscreenElement) {
@@ -1543,21 +1544,36 @@ function ativarTelaCheia() {
     }
 }
 
-// 1. Tenta ativar assim que a página carregar
+// Quando a página carrega, verificamos se veio de um refresh automático
 window.addEventListener('load', () => {
+    // Tenta ativar normalmente
     ativarTelaCheia();
+
+    // Se a página acabou de fazer o refresh de 1 hora, tentamos forçar o pedido 
+    // com pequenas tentativas repetidas caso o navegador demore um segundo a liberar
+    if (localStorage.getItem("veioDeRefresh") === "sim") {
+        localStorage.removeItem("veioDeRefresh"); // Limpa o aviso
+        
+        let tentativas = 0;
+        let intervaloRefresh = setInterval(() => {
+            ativarTelaCheia();
+            tentativas++;
+            if (document.fullscreenElement || tentativas >= 5) {
+                clearInterval(intervaloRefresh);
+            }
+        }, 500); // Tenta a cada meio segundo, até 5 vezes
+    }
 });
 
-// 2. Caso o navegador bloqueie o carregamento automático, o primeiro clique força o fullscreen
+// Caso o navegador bloqueie totalmente no carregamento, o primeiro clique força
 document.addEventListener('click', () => {
     ativarTelaCheia();
 }, { once: true });
 
-// 3. Monitoriza continuamente: se sair do ecrã cheio (ex: tecla ESC), tenta voltar automaticamente
+// Monitoriza continuamente: se sair do ecrã cheio, tenta voltar automaticamente
 document.addEventListener('fullscreenchange', () => {
     if (!document.fullscreenElement) {
         console.log("Saiu do modo de tela cheia. A tentar restaurar...");
-        // Pequeno atraso para garantir estabilidade do navegador
         setTimeout(() => {
             ativarTelaCheia();
         }, 1000);
