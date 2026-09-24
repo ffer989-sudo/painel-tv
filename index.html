@@ -1533,28 +1533,36 @@ function init() {
 init();
 
 /* =========================================================================
-   10. ATIVAÇÃO AUTOMÁTICA DE TELA CHEIA
+   10. ATIVAÇÃO E MONITORIZAÇÃO CONTÍNUA DE TELA CHEIA
    ========================================================================= */
-function ativarTelaCheiaAutomatico() {
+function ativarTelaCheia() {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(err => {
-            // Os navegadores bloqueiam o pedido automático de fullscreen se não houver 
-            // uma interação prévia do utilizador (clique). 
-            console.log("Fullscreen automático aguardando interação.");
+            console.log("Fullscreen a aguardar interação do utilizador.");
         });
     }
 }
 
-// Tenta ativar assim que a página carregar
+// 1. Tenta ativar assim que a página carregar
 window.addEventListener('load', () => {
-    ativarTelaCheiaAutomatico();
+    ativarTelaCheia();
 });
 
-// Garante que caso o navegador bloqueie o carregamento automático, 
-// o primeiro clique/toque na tela coloque em fullscreen imediatamente
+// 2. Caso o navegador bloqueie o carregamento automático, o primeiro clique força o fullscreen
 document.addEventListener('click', () => {
-    ativarTelaCheiaAutomatico();
+    ativarTelaCheia();
 }, { once: true });
+
+// 3. Monitoriza continuamente: se sair do ecrã cheio (ex: tecla ESC), tenta voltar automaticamente
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+        console.log("Saiu do modo de tela cheia. A tentar restaurar...");
+        // Pequeno atraso para garantir estabilidade do navegador
+        setTimeout(() => {
+            ativarTelaCheia();
+        }, 1000);
+    }
+});
 
 </script>
 
