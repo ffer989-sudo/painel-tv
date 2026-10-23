@@ -11,9 +11,8 @@
 
 <title>Acompanhamento e Aniversariantes - TV</title>
 
-<!-- BIBLIOTECA CHART.JS E PLUGIN DATALABELS -->
+<!-- BIBLIOTECA CHART.JS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
 <style>
 :root {
@@ -326,71 +325,6 @@ html, body {
     color: var(--cinza-texto);
     font-size: 12px;
     margin-top: 20px;
-}
-
-/* ==========================================
-   ESTILOS - TELA DE TABULAÇÃO (GRÁFICO ÚNICO GRANDE)
-   ========================================== */
-.container-tabulacao-grafico {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    max-width: 1750px;
-    margin: 0 auto;
-}
-
-.titulo-tabulacao-container {
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.titulo-tabulacao {
-    font-size: clamp(26px, 2.5vw, 38px);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--amarelo);
-    margin: 0;
-}
-
-.subtitulo-tabulacao {
-    font-size: clamp(14px, 1.2vw, 20px);
-    color: var(--cinza-texto);
-    margin-top: 5px;
-    font-weight: 600;
-}
-
-.grafico-unico-card-box {
-    background: var(--azul-card);
-    border-radius: 20px;
-    padding: 20px 25px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 80vh;
-}
-
-.grafico-unico-card-box::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 6px;
-    background: linear-gradient(90deg, var(--azul-destaque), var(--cyan));
-}
-
-.grafico-inner-wrapper {
-    position: relative;
-    width: 100%;
-    flex-grow: 1;
 }
 
 /* ==========================================
@@ -762,22 +696,6 @@ html, body {
         </div>
     </div>
 
-    <!-- TELA FINAL: GRÁFICO ÚNICO COMBINADO (TABULAÇÃO.XLSX) -->
-    <div class="tela" id="telaTabulacaoGrafico">
-        <div class="container-tabulacao-grafico">
-            <div class="titulo-tabulacao-container">
-                <div class="titulo-tabulacao">Tabulação</div>
-                <div class="subtitulo-tabulacao" id="tituloPlanilhaTabulacao">--</div>
-            </div>
-            
-            <div class="grafico-unico-card-box">
-                <div class="grafico-inner-wrapper">
-                    <canvas id="graficoCombinadoTabulacao"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- TELA ÚLTIMA: TEMA AUTOMÁTICO DO MÊS -->
     <div class="tela" id="telaTemaMes">
         <div class="tema-mes-wrapper" id="temaMesWrapper">
@@ -843,8 +761,6 @@ const imagensBrindes = [
         "src": "https://i.postimg.cc/VvjhMst3/Fechamento-de-Ouro.jpg"
     }
 ];
-const dadosTabulacao = [];
-const tituloTabulacao = "";
 
 /* =========================================================================
    1. DADOS DE ENTRADA (FALLBACK)
@@ -898,7 +814,7 @@ const listaAniversariantes = [
    ========================================================================= */
 function gerarTelasImagens() {
     const containerTelas = document.getElementById("containerTelas");
-    const telaTabulacao = document.getElementById("telaTabulacaoGrafico");
+    const telaTemaMes = document.getElementById("telaTemaMes");
     
     const dadosBrindesUsar = (typeof imagensBrindes !== 'undefined' && imagensBrindes.length > 0) ? imagensBrindes : [];
 
@@ -913,7 +829,7 @@ function gerarTelasImagens() {
                 <img src="${imgObj.src}" class="img-brinde-midia" alt="${imgObj.titulo || 'Imagem Brinde'}">
             </div>
         `;
-        containerTelas.insertBefore(divTela, telaTabulacao);
+        containerTelas.insertBefore(divTela, telaTemaMes);
     });
 }
 
@@ -1010,114 +926,7 @@ function renderizarTela1() {
 }
 
 /* =========================================================================
-   6. RENDERIZAÇÃO DO GRÁFICO ÚNICO COMBINADO (SEM LINHAS DE GRADE)
-   ========================================================================= */
-let graficoCombinadoInstance = null;
-
-function renderizarGraficoTabulacao() {
-    if (typeof tituloTabulacao !== 'undefined' && tituloTabulacao.trim() !== "") {
-        document.getElementById('tituloPlanilhaTabulacao').innerText = tituloTabulacao;
-    }
-
-    const dadosGrafico = (typeof dadosTabulacao !== 'undefined' && dadosTabulacao.length > 0) ? dadosTabulacao : [];
-
-    if (graficoCombinadoInstance) graficoCombinadoInstance.destroy();
-
-    const ctx = document.getElementById('graficoCombinadoTabulacao').getContext('2d');
-
-    graficoCombinadoInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: dadosGrafico.map(d => d.agente),
-            datasets: [
-                {
-                    label: 'Média',
-                    data: dadosGrafico.map(d => d.media),
-                    backgroundColor: '#e76f51',
-                    borderColor: '#f4a261',
-                    borderWidth: 1,
-                    borderRadius: { topLeft: 4, bottomLeft: 4, topRight: 0, bottomRight: 0 },
-                    barPercentage: 0.75,
-                    categoryPercentage: 0.85,
-                    stack: 'stack 0',
-                    yAxisID: 'y'
-                },
-                {
-                    label: 'Quantidade',
-                    data: dadosGrafico.map(d => d.quantidade),
-                    backgroundColor: '#1d3557',
-                    borderColor: '#457b9d',
-                    borderWidth: 1,
-                    borderRadius: { topLeft: 0, bottomLeft: 0, topRight: 4, bottomRight: 4 },
-                    barPercentage: 0.75,
-                    categoryPercentage: 0.85,
-                    stack: 'stack 0',
-                    yAxisID: 'y'
-                }
-            ]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'bottom',
-                    labels: { color: '#f8f9fa', font: { weight: 'bold', size: 13 } }
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(10, 25, 47, 0.95)',
-                    titleColor: '#00f5d4',
-                    bodyColor: '#f8f9fa',
-                    borderColor: 'rgba(255,255,255,0.2)',
-                    borderWidth: 1,
-                    padding: 10
-                },
-                datalabels: {
-                    anchor: function(context) {
-                        return context.datasetIndex === 0 ? 'center' : 'end';
-                    },
-                    align: function(context) {
-                        return context.datasetIndex === 0 ? 'center' : 'end';
-                    },
-                    color: '#ffffff',
-                    font: { weight: 'bold', size: 11 },
-                    formatter: function(value) {
-                        if (isNaN(value) || value === null) return '';
-                        return Number(value).toLocaleString('pt-BR');
-                    }
-                }
-            },
-            scales: {
-                x: { 
-                    display: false, 
-                    grid: { display: false },
-                    stacked: true 
-                },
-                y: {
-                    stacked: true,
-                    // Linhas de grade removidas totalmente para um visual limpo
-                    grid: { 
-                        display: false 
-                    },
-                    ticks: { 
-                        color: '#f8f9fa', 
-                        font: { size: 11, weight: 'bold' },
-                        align: 'center',
-                        padding: 10
-                    },
-                    afterFit: function(scaleInstance) {
-                        scaleInstance.width = 160; 
-                    }
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    });
-}
-/* =========================================================================
-   7. TEMA AUTOMÁTICO DO MÊS VIGENTE
+   6. TEMA AUTOMÁTICO DO MÊS VIGENTE
    ========================================================================= */
 function configurarTemaAutomaticoMes() {
     const hoje = new Date();
@@ -1265,7 +1074,7 @@ function configurarTemaAutomaticoMes() {
 }
 
 /* =========================================================================
-   8. CONTROLE DE TEMPO E NAVEGAÇÃO
+   7. CONTROLE DE TEMPO E NAVEGAÇÃO
    ========================================================================= */
 const TEMPO_PADRAO = 20;
 
@@ -1273,7 +1082,6 @@ const temposTelas = {
     "tela1": 40,
     "tela2": 05,
     "tela3": 20,
-    "telaTabulacaoGrafico": 30,
     "telaTemaMes": 20,
     "telaBrinde_0": 10,
     "telaBrinde_1": 40,
@@ -1323,10 +1131,6 @@ function irParaTela(index) {
     const telaAtualObj = telas[telaAtual];
     telaAtualObj.classList.add("ativa");
     if (pontos[telaAtual]) pontos[telaAtual].classList.add("ativo");
-
-    if (telaAtualObj.id === 'telaTabulacaoGrafico') {
-        if (graficoCombinadoInstance) graficoCombinadoInstance.resize();
-    }
 
     const idTela = telaAtualObj.id;
     const tempoSegundos = temposTelas[idTela] || TEMPO_PADRAO;
@@ -1407,7 +1211,7 @@ function telaCheia() {
 }
 
 /* =========================================================================
-   9. AUTO-RELOAD DA TELA A CADA 1 HORA
+   8. AUTO-RELOAD DA TELA A CADA 1 HORA
    ========================================================================= */
 setInterval(() => {
     localStorage.setItem("veioDeRefresh", "sim");
@@ -1421,7 +1225,6 @@ function init() {
     gerarTelasImagens();
     configurarTemaAutomaticoMes();
     criarIndicadores();
-    renderizarGraficoTabulacao();
     document.getElementById("ultimaAtualizacao").innerText = new Date().toLocaleTimeString("pt-BR");
 
     if (telas.length > 0) {
@@ -1433,7 +1236,7 @@ function init() {
 init();
 
 /* =========================================================================
-   10. ATIVAÇÃO E MONITORIZAÇÃO CONTÍNUA DE TELA CHEIA (COM SUPORTE A REFRESH)
+   9. ATIVAÇÃO E MONITORIZAÇÃO CONTÍNUA DE TELA CHEIA
    ========================================================================= */
 function ativarTelaCheia() {
     if (!document.fullscreenElement) {
@@ -1443,15 +1246,11 @@ function ativarTelaCheia() {
     }
 }
 
-// Quando a página carrega, verificamos se veio de um refresh automático
 window.addEventListener('load', () => {
-    // Tenta ativar normalmente
     ativarTelaCheia();
 
-    // Se a página acabou de fazer o refresh de 1 hora, tentamos forçar o pedido 
-    // com pequenas tentativas repetidas caso o navegador demore um segundo a liberar
     if (localStorage.getItem("veioDeRefresh") === "sim") {
-        localStorage.removeItem("veioDeRefresh"); // Limpa o aviso
+        localStorage.removeItem("veioDeRefresh");
         
         let tentativas = 0;
         let intervaloRefresh = setInterval(() => {
@@ -1460,16 +1259,14 @@ window.addEventListener('load', () => {
             if (document.fullscreenElement || tentativas >= 5) {
                 clearInterval(intervaloRefresh);
             }
-        }, 500); // Tenta a cada meio segundo, até 5 vezes
+        }, 500);
     }
 });
 
-// Caso o navegador bloqueie totalmente no carregamento, o primeiro clique força
 document.addEventListener('click', () => {
     ativarTelaCheia();
 }, { once: true });
 
-// Monitoriza continuamente: se sair do ecrã cheio, tenta voltar automaticamente
 document.addEventListener('fullscreenchange', () => {
     if (!document.fullscreenElement) {
         console.log("Saiu do modo de tela cheia. A tentar restaurar...");
