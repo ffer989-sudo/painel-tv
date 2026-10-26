@@ -389,6 +389,95 @@ html, body {
     100% { transform: translateY(-1000px) rotate(20deg); opacity: 0; }
 }
 
+/* ==========================================
+   ESTILOS - TELA EVENTOS (CONFETES E FOTOS)
+   ========================================== */
+.intro-eventos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #1b263b 0%, #415a77 100%);
+    border-radius: 24px;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.intro-eventos h2 {
+    font-size: clamp(36px, 5vw, 68px);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--amarelo);
+    text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    animation: pulse 2s infinite alternate;
+    z-index: 2;
+}
+
+.intro-eventos p {
+    font-size: clamp(20px, 2.2vw, 32px);
+    margin-top: 20px;
+    color: var(--cyan);
+    font-weight: bold;
+    z-index: 2;
+}
+
+.confete {
+    position: absolute;
+    top: -20px;
+    width: 12px;
+    height: 20px;
+    background-color: var(--amarelo);
+    animation: cairConfete 5s infinite linear;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+@keyframes cairConfete {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+}
+
+.container-imagem-evento {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    gap: 15px;
+    padding: 20px;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+    border-radius: 24px;
+}
+
+.descricao-evento-foto {
+    font-size: clamp(18px, 2vw, 26px);
+    font-weight: 700;
+    color: var(--amarelo);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 12px 30px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 1200px;
+}
+
+.img-evento-midia {
+    width: 100%;
+    max-width: 90vw;
+    max-height: 75vh;
+    border-radius: 18px;
+    object-fit: contain;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
 .aniversariantes-wrapper {
     display: flex;
     flex-direction: column;
@@ -696,7 +785,7 @@ html, body {
         </div>
     </div>
 
-    <!-- TELA ÚLTIMA: TEMA AUTOMÁTICO DO MÊS -->
+    <!-- TELA FINAL: TEMA AUTOMÁTICO DO MÊS -->
     <div class="tela" id="telaTemaMes">
         <div class="tema-mes-wrapper" id="temaMesWrapper">
             <div class="tema-mes-card" id="temaMesCard">
@@ -719,20 +808,20 @@ const dadosEntrada = [
     {
         "faixa": "60 dias",
         "meta": 3600,
-        "realizado": 2708,
-        "projecao": 3202
+        "realizado": 2807,
+        "projecao": 3106
     },
     {
         "faixa": "90 dias",
         "meta": 2600,
-        "realizado": 1782,
-        "projecao": 2278
+        "realizado": 1897,
+        "projecao": 2172
     },
     {
         "faixa": "120 dias",
         "meta": 1200,
-        "realizado": 747,
-        "projecao": 1001
+        "realizado": 782,
+        "projecao": 949
     }
 ];
 const imagensBrindes = [
@@ -765,6 +854,9 @@ const imagensBrindes = [
 const dadosTabulacao = [];
 
 const tituloTabulacao = "";
+
+/* DADOS DA PLANILHA "eventos.xlsx" (Preenchidos automaticamente pelo script python. Fica vazio se a planilha não tiver dados) */
+const dadosEventos = [];
 
 /* =========================================================================
    1. DADOS DE ENTRADA (FALLBACK)
@@ -806,7 +898,7 @@ const listaAniversariantes = [
     { nome: "Karyna Cristina Meira Bento", dia: "24/09", foto: "https://i.postimg.cc/V63ySvSW/KARYNA-DESKTOP.jpg" },
     { nome: "Luiz Gustavo Damas da Silva", dia: "10/10", foto: "https://i.postimg.cc/wxDnysWT/luis.png" },
     { nome: "Claudia Fernanda Pin de Mattos", dia: "16/10", foto: "https://i.postimg.cc/DwfVKyPv/claudia.png" },
-    { nome: "Rafael da Silva Batista Tolli", dia: "16/10", foto: "https://media.licdn.com/dms/image/v2/D4D03AQGELNzstN5Krg/profile-displayphoto-scale_400_400/B4DaCvo4d1GkAg-/0/1789653126972?e=1794441600&v=beta&t=6LNLeCtfZLv3uM9OFKPJzlVd1wDGKhljB-n--aY_yFk" },
+    { nome: "Rafael da Silva Batista Tolli", dia: "16/10", foto: "https://media.licdn.com/dms/image/v2/D4D03AQGELNzstN5Krg/profile-displayphoto-scale_400_400/B4DaCvo4d1GkAg-/0/1789653126972?e=1792627200&v=beta&t=UyRHD0-GrLaiHmIM_B0mpHby9zBcSxxCnfW8vCzMU54" },
     { nome: "Clara Marcelino da Silva", dia: "02/12", foto: "" },
     { nome: "Thierry Rodrigues Dias", dia: "19/12", foto: "" },
     { nome: "Amanda Cristina Aparecida Silva", dia: "21/12", foto: "" },
@@ -814,14 +906,14 @@ const listaAniversariantes = [
 ];
 
 /* =========================================================================
-   4. GERAÇÃO DINÂMICA DAS TELAS DE BRINDES/IMAGENS
+   4. GERAÇÃO DINÂMICA DAS TELAS DE BRINDES E EVENTOS
    ========================================================================= */
 function gerarTelasImagens() {
     const containerTelas = document.getElementById("containerTelas");
     const telaTemaMes = document.getElementById("telaTemaMes");
     
+    // 1. Inserir telas de Brindes
     const dadosBrindesUsar = (typeof imagensBrindes !== 'undefined' && imagensBrindes.length > 0) ? imagensBrindes : [];
-
     dadosBrindesUsar.forEach((imgObj, idx) => {
         const divTela = document.createElement("div");
         divTela.className = "tela";
@@ -835,6 +927,41 @@ function gerarTelasImagens() {
         `;
         containerTelas.insertBefore(divTela, telaTemaMes);
     });
+
+    // 2. Inserir telas de Eventos SOMENTE se houver dados preenchidos na planilha/variável
+    if (typeof dadosEventos !== 'undefined' && dadosEventos.length > 0) {
+        const tituloEvento = dadosEventos[0].titulo || "Evento Especial";
+        const divIntro = document.createElement("div");
+        divIntro.className = "tela";
+        divIntro.id = "telaIntroEvento";
+        divIntro.innerHTML = `
+            <div class="intro-eventos">
+                <div class="confete" style="left: 10%; background: #e63946; animation-delay: 0s;"></div>
+                <div class="confete" style="left: 25%; background: #ffb703; animation-delay: 1.2s;"></div>
+                <div class="confete" style="left: 40%; background: #00f5d4; animation-delay: 0.4s;"></div>
+                <div class="confete" style="left: 60%; background: #2ec4b6; animation-delay: 1.8s;"></div>
+                <div class="confete" style="left: 75%; background: #e0aaff; animation-delay: 0.8s;"></div>
+                <div class="confete" style="left: 90%; background: #3a86ff; animation-delay: 2.2s;"></div>
+
+                <h2>🎉 ${tituloEvento} 🎉</h2>
+                <p>Confira os melhores momentos!</p>
+            </div>
+        `;
+        containerTelas.insertBefore(divIntro, telaTemaMes);
+
+        dadosEventos.forEach((ev, idx) => {
+            const divFoto = document.createElement("div");
+            divFoto.className = "tela";
+            divFoto.id = `telaEventoFoto_${idx}`;
+            divFoto.innerHTML = `
+                <div class="container-imagem-evento">
+                    <img src="${ev.foto}" class="img-evento-midia" alt="Foto Evento">
+                    ${ev.descricao ? `<div class="descricao-evento-foto">${ev.descricao}</div>` : ''}
+                </div>
+            `;
+            containerTelas.insertBefore(divFoto, telaTemaMes);
+        });
+    }
 }
 
 /* =========================================================================
@@ -1087,13 +1214,7 @@ const temposTelas = {
     "tela2": 05,
     "tela3": 20,
     "telaTemaMes": 20,
-    "telaBrinde_0": 10,
-    "telaBrinde_1": 40,
-    "telaBrinde_2": 20,
-    "telaBrinde_3": 20,
-    "telaBrinde_4": 20,
-    "telaBrinde_5": 20,
-    "telaBrinde_6": 20
+    "telaIntroEvento": 10
 };
 
 let telaAtual = 0;
